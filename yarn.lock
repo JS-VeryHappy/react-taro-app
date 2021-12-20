@@ -12729,6 +12729,18 @@ style-search@^0.1.0:
   resolved "https://registry.nlark.com/style-search/download/style-search-0.1.0.tgz#7958c793e47e32e07d2b5cafe5c0bf8e12e77902"
   integrity sha1-eVjHk+R+MuB9K1yv5cC/jhLneQI=
 
+stylelint-config-recommended@^6.0.0:
+  version "6.0.0"
+  resolved "https://registry.npmmirror.com/stylelint-config-recommended/download/stylelint-config-recommended-6.0.0.tgz#fd2523a322836005ad9bf473d3e5534719c09f9d"
+  integrity sha1-/SUjoyKDYAWtm/Rz0+VTRxnAn50=
+
+stylelint-config-standard@^24.0.0:
+  version "24.0.0"
+  resolved "https://registry.npmmirror.com/stylelint-config-standard/download/stylelint-config-standard-24.0.0.tgz?cache=0&sync_timestamp=1636911768470&other_urls=https%3A%2F%2Fregistry.npmmirror.com%2Fstylelint-config-standard%2Fdownload%2Fstylelint-config-standard-24.0.0.tgz#6823f207ab997ae0b641f9a636d007cc44d77541"
+  integrity sha512-+RtU7fbNT+VlNbdXJvnjc3USNPZRiRVp/d2DxOF/vBDDTi0kH5RX2Ny6errdtZJH3boO+bmqIYEllEmok4jiuw==
+  dependencies:
+    stylelint-config-recommended "^6.0.0"
+
 stylelint@13.6.1:
   version "13.6.1"
   resolved "https://registry.npmmirror.com/stylelint/download/stylelint-13.6.1.tgz#cc1d76338116d55e8ff2be94c4a4386c1239b878"
