@@ -32,7 +32,8 @@
     "lint:style": "stylelint --fix \"src/**/*.less\" --syntax less"
   },
   "gitHooks": {
-    "commit-msg": "node ./verifyCommit.js"
+    "commit-msg": "node ./verifyCommit.js",
+    "pre-commit": "lint-staged"
   },
   "lint-staged": {
     "*.less": "stylelint --syntax less",
