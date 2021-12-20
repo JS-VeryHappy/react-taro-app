@@ -1,0 +1,43 @@
+{
+  "editor.formatOnSave": true,
+  "editor.codeActionsOnSave": {
+    // "source.fixAll.eslint": true
+  },
+  "editor.defaultFormatter": "esbenp.prettier-vscode",
+  "[javascript]": {
+    // "editor.formatOnSave": true,
+    "editor.defaultFormatter": "esbenp.prettier-vscode"
+  },
+  // 检索过滤
+  "search.exclude": {
+    "**/node_modules": true,
+    "**/bower_components": true,
+    "**/dist": true
+  },
+  "GitCommitPlugin.CustomCommitType": [
+    {
+      "label": "💥 feat",
+      "detail": "add 'comments' option"
+    },
+    {
+      "label": "🐛 fix",
+      "detail": "fix some bug"
+    },
+    {
+      "label": "📝 docs",
+      "detail": "add some docs"
+    },
+    {
+      "label": "🌷 UI",
+      "detail": "better styles"
+    },
+    {
+      "label": "🏰 chore",
+      "detail": "Made some changes to the scaffolding"
+    },
+    {
+      "label": "🌐 locale",
+      "detail": "Made a small contribution to internationalization"
+    }
+  ]
+}
