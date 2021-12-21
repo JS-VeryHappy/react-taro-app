@@ -16,7 +16,7 @@
   },
   "GitCommitPlugin.CustomCommitType": [
     {
-      "label": "💥 feat",
+      "label": "✨ feat",
       "detail": "add 'comments' option"
     },
     {
