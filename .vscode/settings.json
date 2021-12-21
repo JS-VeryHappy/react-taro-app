@@ -16,27 +16,27 @@
   },
   "GitCommitPlugin.CustomCommitType": [
     {
-      "label": "feat",
+      "label": "💥 feat",
       "detail": "add 'comments' option"
     },
     {
-      "label": "fix",
+      "label": "🐛 fix",
       "detail": "fix some bug"
     },
     {
-      "label": "docs",
+      "label": "📝 docs",
       "detail": "add some docs"
     },
     {
-      "label": "UI",
+      "label": "🌷 UI",
       "detail": "better styles"
     },
     {
-      "label": "chore",
+      "label": "🏰 chore",
       "detail": "Made some changes to the scaffolding"
     },
     {
-      "label": "locale",
+      "label": "🌐 locale",
       "detail": "Made a small contribution to internationalization"
     }
   ]
