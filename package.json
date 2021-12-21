@@ -29,12 +29,12 @@
     "lint:fix": "eslint --fix --cache --ext .js,.jsx,.ts,.tsx --format=pretty ./src && npm run lint:style",
     "lint:js": "eslint --cache --ext .js,.jsx,.ts,.tsx --format=pretty ./src",
     "lint:prettier": "prettier --check \"src/**/*\" --end-of-line auto",
-    "lint:style": "stylelint --fix \"src/**/*.less\" --syntax less",
+    "lint:style": "stylelint --fix \"src/**/*.scss\" --syntax scss",
     "automatic-husky": "npx husky-init && yarn ",
     "prepare": "husky install"
   },
   "lint-staged": {
-    "*.less": "stylelint --syntax less",
+    "*.scss": "stylelint --syntax scss",
     "*.{js,jsx,ts,tsx}": "npm run lint-staged:js",
     "*.{js,jsx,less,md,json}": [
       "prettier --write"
@@ -53,7 +53,8 @@
     "classnames": "^2.3.1",
     "react": "^17.0.2",
     "react-dom": "^17.0.2",
-    "taro-hooks": "latest"
+    "taro-hooks": "latest",
+    "taro-ui": "^2.3.4"
   },
   "devDependencies": {
     "@babel/core": "^7.8.0",
@@ -68,6 +69,7 @@
     "@types/webpack-env": "^1.13.6",
     "@typescript-eslint/eslint-plugin": "^5.0.0",
     "@typescript-eslint/parser": "^5.0.0",
+    "@umijs/fabric": "^2.8.1",
     "babel-plugin-import": "^1.13.3",
     "babel-preset-taro": "3.3.17",
     "eslint": "^7.0.0",
@@ -82,8 +84,12 @@
     "prettier": "^2.4.1",
     "puppeteer-core": "^13.0.0",
     "react-amap": "^1.2.8",
-    "stylelint": "^13.13.1",
-    "stylelint-config-standard": "^24.0.0",
+    "stylelint": "^13.1.0",
+    "stylelint-config-css-modules": "^2.3.0",
+    "stylelint-config-prettier": "^9.0.3",
+    "stylelint-config-standard": "^22.0.0",
+    "stylelint-order": "^4.0.0",
+    "stylelint-scss": "^3.0.0",
     "typescript": "^4.2.3"
   },
   "browserslist": [

@@ -1,8 +1,9 @@
+const fabric = require('@umijs/fabric');
+
 module.exports = {
-  extends: ['taro/react'],
+  ...fabric.eslint,
   rules: {
-    'react/jsx-uses-react': 'off',
-    'react/react-in-jsx-scope': 'off',
-    "jsx-quotes": ["error", "prefer-double"], 
+    ...fabric.eslint.rules,
+    '@typescript-eslint/no-unused-vars': ['off'],
   },
 };
