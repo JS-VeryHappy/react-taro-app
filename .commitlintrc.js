@@ -5,9 +5,9 @@ module.exports = {
     'type-enum': [
       2,
       'always',
-      ['feat', 'fix', 'docs', 'style', 'refactor', 'test', 'chore', 'revert', '🐛 fix'],
+      ['feat', 'fix', 'docs', 'style', 'refactor', 'test', 'chore', 'revert', '🐛 fix', '💥feat'],
     ], // 改变预设中的提交类型
-    'type-case': [2, 'always', 'lower-case'], // 提交类型必须使用小写
+    // 'type-case': [2, 'always', 'lower-case'], // 提交类型必须使用小写
     'type-empty': [2, 'never'], // type不能为空
     // 'header-max-length': [2, 'always', 5], // header内容的最大长度为5
     'subject-min-length': [2, 'always', 1], // subject内容的最小长度为1
