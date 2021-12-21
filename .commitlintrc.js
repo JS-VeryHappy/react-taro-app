@@ -5,7 +5,7 @@ module.exports = {
     'type-enum': [
       2,
       'always',
-      ['feat', 'fix', 'docs', 'style', 'refactor', 'test', 'chore', 'revert'],
+      ['feat', 'fix', 'docs', 'style', 'refactor', 'test', 'chore', 'revert', '🐛 fix'],
     ], // 改变预设中的提交类型
     'type-case': [2, 'always', 'lower-case'], // 提交类型必须使用小写
     'type-empty': [2, 'never'], // type不能为空
