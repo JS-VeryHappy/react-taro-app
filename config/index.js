@@ -1,3 +1,5 @@
+import path from 'path';
+
 const config = {
   projectName: 'myApp',
   date: '2021-12-20',
@@ -12,7 +14,10 @@ const config = {
   plugins: [],
   defineConstants: {},
   alias: {
-    '@/': path.resolve(__dirname, '..', 'src/'),
+    '@/components': path.resolve(__dirname, '..', 'src/components'),
+    '@/services': path.resolve(__dirname, '..', 'src/services'),
+    '@/utils': path.resolve(__dirname, '..', 'src/utils'),
+    '@/hooks': path.resolve(__dirname, '..', 'src/hooks'),
   },
   copy: {
     patterns: [],

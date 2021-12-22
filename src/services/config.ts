@@ -1,6 +1,4 @@
 import Taro from '@tarojs/taro';
-// import type { request as requestType }  from '@tarojs/taro';
-
 import { convertObjToUrl } from '@/utils';
 import { MD5 } from 'crypto-js';
 
@@ -39,7 +37,7 @@ export const responseTableConfig = {
   total: 'total', // 表格数据列表总数字段名称
 };
 
-const httpError = (statusCode: number, errorMessageShow: boolean) => {
+const httpError = (http: any, errorMessageShow: boolean) => {
   const httpErrorMsg = {
     500: '服务器错误',
     401: '登陆失效',
@@ -47,20 +45,25 @@ const httpError = (statusCode: number, errorMessageShow: boolean) => {
     403: '权限不足',
     503: '服务器维护中',
   };
-  const message = httpErrorMsg[statusCode] || '未知错误';
+  const message = httpErrorMsg[http.statusCode] || '未知错误';
+
   if (errorMessageShow) {
-    Taro.showToast({ title: message, icon: 'none' });
+    Taro.showToast({ title: message, icon: 'none', duration: 2000 });
   }
 };
 
-const codeError = (code: number, errorMessageShow: boolean) => {
+const codeError = (data: any, errorMessageShow: boolean) => {
   const codeErrorMsg = {
-    10001: '数据错误',
+    10000: '系统错误',
   };
-  const message = codeErrorMsg[code] || '未知错误';
+  let message = '未知错误';
+
+  if (data[responseConfig.code]) {
+    message = codeErrorMsg[data[responseConfig.code]] || data[responseConfig.message];
+  }
 
   if (errorMessageShow) {
-    Taro.showToast({ title: message, icon: 'none' });
+    Taro.showToast({ title: message, icon: 'none', duration: 2000 });
   }
 };
 
@@ -75,12 +78,14 @@ const interceptor = function (chain: any) {
   const time: any = parseInt(new Date().getTime() / 1000 + '');
   const token: string = Taro.getStorageSync('token');
 
-  const header = {
+  const header: any = {
     version: VERSION,
     sign: MD5(VERSION + time + SIGN_KEY).toString(),
     time: time,
-    Authorization: token !== '' ? `Bearer ${token}` : '',
   };
+  if (token) {
+    header.Authorization = `Bearer ${token}`;
+  }
   return chain
     .proceed({
       ...requestParams,
@@ -114,6 +119,7 @@ const request = (url: string, options?: optionsTypes) => {
       uri = convertObjToUrl(url, params);
     }
     Taro.addInterceptor(interceptor);
+
     Taro.request({
       url: API_URL + uri,
       data: data,
@@ -125,7 +131,7 @@ const request = (url: string, options?: optionsTypes) => {
             resolve(res.data);
           } else {
             // 业务错误
-            codeError(code, errorMessageShow);
+            codeError(res.data, errorMessageShow);
             reject(res.data);
           }
         } else {
@@ -138,12 +144,15 @@ const request = (url: string, options?: optionsTypes) => {
         Taro.showToast({
           title: '服务器连接异常，请稍后重试或联系我们！',
           icon: 'none',
+          duration: 2000,
         });
         reject(err);
       },
       complete() {
         if (autoLoading) {
-          Taro.hideLoading();
+          if (Taro.getEnv() !== 'WEB') {
+            Taro.hideLoading();
+          }
         }
       },
     });

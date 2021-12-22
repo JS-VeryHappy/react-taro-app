@@ -3,10 +3,12 @@ module.exports = {
     NODE_ENV: '"development"',
   },
   defineConstants: {
-    API_URL: 'http://www.adminapi.com',
-    VERSION: '1.0.0',
-    SIGN_KEY: 'zycfly',
+    API_URL: '"http://www.adminapi.com/wechat"',
+    VERSION: '"1.0.0"',
+    SIGN_KEY: '"zycfly"',
   },
   mini: {},
-  h5: {},
+  h5: {
+    sourceMapType: 'source-map',
+  },
 };

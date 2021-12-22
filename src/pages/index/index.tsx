@@ -1,12 +1,22 @@
-import React, { useState } from 'react';
+import React, { useEffect } from 'react';
 import { View, Text } from '@tarojs/components';
+import { miniprogramLogin } from '@/services/api/user';
 
 import styles from './index.module.scss';
 
 const Index = () => {
-  const [a, setA] = useState(null);
-  const d: any = {};
-  d.dd = 2;
+  useEffect(() => {
+    miniprogramLogin({
+      a: 1,
+    })
+      .then((res: any) => {
+        console.log(res);
+      })
+      .catch((err: any) => {
+        console.log(err);
+      });
+  }, []);
+
   return (
     <View className={styles.wrapper}>
       <Text className={styles.title}>为Taro而设计的Hooks Library</Text>

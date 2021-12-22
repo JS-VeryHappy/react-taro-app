@@ -105,12 +105,12 @@ export const postDownload = async (url: string, data?: any, options?: any) => {
     getResponse: true,
   });
 
-  return downloadFile('blob', {
-    data: res.data,
-    headers: {
-      'content-disposition': res.response.headers.get('content-disposition'),
-    },
-  });
+  // return downloadFile('blob', {
+  //   data: res.data,
+  //   headers: {
+  //     'content-disposition': res.response.headers.get('content-disposition'),
+  //   },
+  // });
 };
 
 /**
