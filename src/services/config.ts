@@ -125,6 +125,9 @@ const request = (url: string, options?: optionsTypes) => {
       data: data,
       ...rest,
       success: (res: any) => {
+        if (autoLoading) {
+          Taro.hideLoading();
+        }
         if (res.statusCode === 200) {
           const { code } = res.data;
           if (code === 0) {
@@ -141,6 +144,9 @@ const request = (url: string, options?: optionsTypes) => {
         }
       },
       fail(err) {
+        if (autoLoading) {
+          Taro.hideLoading();
+        }
         Taro.showToast({
           title: '服务器连接异常，请稍后重试或联系我们！',
           icon: 'none',
@@ -148,13 +154,7 @@ const request = (url: string, options?: optionsTypes) => {
         });
         reject(err);
       },
-      complete() {
-        if (autoLoading) {
-          if (Taro.getEnv() !== 'WEB') {
-            Taro.hideLoading();
-          }
-        }
-      },
+      complete() {},
     });
   });
 };

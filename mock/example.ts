@@ -74,6 +74,10 @@ const getMessage = async (req: any, res: any) => {
 };
 
 export default {
+  'POST /wechat/miniprogram/login': getObj.bind(null, {
+    data: userinfo,
+    timeout: 1000,
+  }),
   // 用户消息数据
   'POST /api/user/message': getMessage.bind(null),
 

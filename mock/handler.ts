@@ -1,8 +1,24 @@
 /* eslint-disable @typescript-eslint/no-unused-vars */
 import mockjs from 'mockjs';
-import { waitTime } from '../src/utils';
-import { responseConfig, responseTableConfig } from '../src/services/config';
 
+const responseConfig = {
+  data: 'data', // 存放数据字段
+  success: 0, // 判断成功值
+  code: 'code', // 错误码字段
+  message: 'msg', // 返回信息字段
+};
+
+const responseTableConfig = {
+  data: 'data', // 表格数据列表字段名称
+  total: 'total', // 表格数据列表总数字段名称
+};
+const waitTime = (time: number = 100) => {
+  return new Promise((resolve) => {
+    setTimeout(() => {
+      resolve(true);
+    }, time);
+  });
+};
 /**
  * mockjs 定义
  * https://github.com/nuysoft/Mock/wiki/Getting-Started
