@@ -11,6 +11,9 @@ const config = {
   outputRoot: 'dist',
   plugins: [],
   defineConstants: {},
+  alias: {
+    '@/': path.resolve(__dirname, '..', 'src/'),
+  },
   copy: {
     patterns: [],
     options: {},
@@ -38,6 +41,9 @@ const config = {
     },
   },
   h5: {
+    router: {
+      mode: 'browser',
+    },
     publicPath: '/',
     staticDirectory: 'static',
     esnextModules: ['taro-ui'],

@@ -10,6 +10,10 @@ declare module '*.scss';
 declare module '*.sass';
 declare module '*.styl';
 
+declare const API_URL;
+declare const VERSION;
+declare const SIGN_KEY;
+
 // @ts-ignore
 declare const process: {
   env: {

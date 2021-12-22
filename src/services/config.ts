@@ -1,0 +1,153 @@
+import Taro from '@tarojs/taro';
+// import type { request as requestType }  from '@tarojs/taro';
+
+import { convertObjToUrl } from '@/utils';
+import { MD5 } from 'crypto-js';
+
+declare type optionsTypes = {
+  /**
+   * body传递参数
+   */
+  data?: object;
+  /**
+   * query 传递参数
+   */
+  params?: object;
+  /**
+   * 是否错误提示
+   * @default true
+   */
+  errorMessageShow?: boolean;
+  /**
+   * 是否请求自动显示loading
+   * @default true
+   */
+  autoLoading?: boolean;
+
+  [propName: string]: any;
+};
+
+export const responseConfig = {
+  data: 'data', // 存放数据字段
+  success: 0, // 判断成功值
+  code: 'code', // 错误码字段
+  message: 'msg', // 返回信息字段
+};
+
+export const responseTableConfig = {
+  data: 'data', // 表格数据列表字段名称
+  total: 'total', // 表格数据列表总数字段名称
+};
+
+const httpError = (statusCode: number, errorMessageShow: boolean) => {
+  const httpErrorMsg = {
+    500: '服务器错误',
+    401: '登陆失效',
+    404: '数据不存在',
+    403: '权限不足',
+    503: '服务器维护中',
+  };
+  const message = httpErrorMsg[statusCode] || '未知错误';
+  if (errorMessageShow) {
+    Taro.showToast({ title: message, icon: 'none' });
+  }
+};
+
+const codeError = (code: number, errorMessageShow: boolean) => {
+  const codeErrorMsg = {
+    10001: '数据错误',
+  };
+  const message = codeErrorMsg[code] || '未知错误';
+
+  if (errorMessageShow) {
+    Taro.showToast({ title: message, icon: 'none' });
+  }
+};
+
+/**
+ * 拦截器
+ * @param chain
+ * @returns
+ */
+const interceptor = function (chain: any) {
+  const requestParams = chain.requestParams;
+
+  const time: any = parseInt(new Date().getTime() / 1000 + '');
+  const token: string = Taro.getStorageSync('token');
+
+  const header = {
+    version: VERSION,
+    sign: MD5(VERSION + time + SIGN_KEY).toString(),
+    time: time,
+    Authorization: token !== '' ? `Bearer ${token}` : '',
+  };
+  return chain
+    .proceed({
+      ...requestParams,
+      header: {
+        ...requestParams.header,
+        ...header,
+      },
+    })
+    .then((res: any) => {
+      return res;
+    });
+};
+/**
+ * 请求封装
+ * @param url 接口地址
+ * @param data 请求参数
+ * @param options 配置
+ * @returns Promise
+ */
+const request = (url: string, options?: optionsTypes) => {
+  const { data, params, errorMessageShow = true, autoLoading = true, ...rest } = options || {};
+
+  return new Promise<any>((resolve, reject) => {
+    if (autoLoading) {
+      Taro.showLoading({
+        title: '数据请求中...',
+      });
+    }
+    let uri = url;
+    if (params) {
+      uri = convertObjToUrl(url, params);
+    }
+    Taro.addInterceptor(interceptor);
+    Taro.request({
+      url: API_URL + uri,
+      data: data,
+      ...rest,
+      success: (res: any) => {
+        if (res.statusCode === 200) {
+          const { code } = res.data;
+          if (code === 0) {
+            resolve(res.data);
+          } else {
+            // 业务错误
+            codeError(code, errorMessageShow);
+            reject(res.data);
+          }
+        } else {
+          // http码错误
+          httpError(res, errorMessageShow);
+          reject(res);
+        }
+      },
+      fail(err) {
+        Taro.showToast({
+          title: '服务器连接异常，请稍后重试或联系我们！',
+          icon: 'none',
+        });
+        reject(err);
+      },
+      complete() {
+        if (autoLoading) {
+          Taro.hideLoading();
+        }
+      },
+    });
+  });
+};
+
+export default request;

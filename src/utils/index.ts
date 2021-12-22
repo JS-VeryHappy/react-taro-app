@@ -113,9 +113,11 @@ export const convertObjToUrl = (url: string, data: any) => {
     const value = data[key];
     if (value.constructor == Array) {
       value.forEach(function (_value) {
+        // @ts-ignore
         _result.push(key + '=' + _value);
       });
     } else {
+      // @ts-ignore
       _result.push(key + '=' + value);
     }
   }
