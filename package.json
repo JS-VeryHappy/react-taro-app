@@ -54,8 +54,12 @@
     "crypto-js": "^4.1.1",
     "react": "^17.0.2",
     "react-dom": "^17.0.2",
-    "taro-hooks": "latest",
-    "taro-ui": "^2.3.4"
+    "react-redux": "^7.2.6",
+    "redux": "^4.1.2",
+    "redux-logger": "^3.0.6",
+    "redux-thunk": "^2.4.1",
+    "taro-hooks": "^1.5.1",
+    "taro-ui": "^3.0.0-alpha.10"
   },
   "devDependencies": {
     "@babel/core": "^7.8.0",
@@ -69,6 +73,7 @@
     "@types/mockjs": "^1.0.4",
     "@types/react": "^17.0.2",
     "@types/webpack-env": "^1.13.6",
+    "@types/react-redux": "^7.1.21",
     "@typescript-eslint/eslint-plugin": "^5.0.0",
     "@typescript-eslint/parser": "^5.0.0",
     "@umijs/fabric": "^2.8.1",

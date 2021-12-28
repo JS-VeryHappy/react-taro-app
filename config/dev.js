@@ -2,9 +2,9 @@ module.exports = {
   env: {
     NODE_ENV: '"development"',
   },
-  plugins: ['@tarojs/plugin-mock'],
+  // plugins: ['@tarojs/plugin-mock'],
   defineConstants: {
-    API_URL: '"http://127.0.0.1:9527/wechat"',
+    API_URL: '"http://www.adminapi.com/api"',
     VERSION: '"1.0.0"',
     SIGN_KEY: '"zycfly"',
   },

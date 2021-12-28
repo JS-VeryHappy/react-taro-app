@@ -1,6 +1,7 @@
 import path from 'path';
 
 const config = {
+  framework: 'react',
   projectName: 'myApp',
   date: '2021-12-20',
   designWidth: 750,
@@ -18,6 +19,7 @@ const config = {
     '@/services': path.resolve(__dirname, '..', 'src/services'),
     '@/utils': path.resolve(__dirname, '..', 'src/utils'),
     '@/hooks': path.resolve(__dirname, '..', 'src/hooks'),
+    '@/store': path.resolve(__dirname, '..', 'src/store'),
   },
   copy: {
     patterns: [],
