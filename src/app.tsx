@@ -1,5 +1,4 @@
 import React, { Component } from 'react';
-import configStore from './store';
 import { Provider } from 'react-redux';
 import Taro from '@tarojs/taro';
 import {
@@ -10,13 +9,15 @@ import {
   setScene,
   setOpenId,
   getOpenId,
+  getToken,
 } from '@/utils/storage';
 import { sceneToObject } from '@/utils';
 import { miniprogramStart } from '@/services/api/miniprogram';
+import { authIsLogin } from '@/services/api/user';
+import { Store } from './store';
+import { userInfoAction } from '@/store/action';
+
 import './app.scss';
-
-const store = configStore();
-
 /**
  * 应用有新版本
  */
@@ -99,15 +100,25 @@ const storageBusinessData = async (option: any) => {
   }
 };
 
+const getUserInfo = async () => {
+  const res: any = await authIsLogin();
+  // @ts-ignore
+  Store.dispatch(userInfoAction(res.data));
+};
 class App extends Component {
   componentDidMount() {}
 
-  onLaunch(option: any) {
+  async onLaunch(option: any) {
     console.log('App Launch');
     // 更新应用
     updateApp(option);
     // 业务参数处理
     storageBusinessData(option);
+
+    // 如果本地有token 调用获取用户信息
+    if (getToken()) {
+      await getUserInfo();
+    }
   }
 
   componentDidShow() {
@@ -123,7 +134,7 @@ class App extends Component {
   // 在 App 类中的 render() 函数没有实际作用
   // 请勿修改此函数
   render() {
-    return <Provider store={store}>{this.props.children}</Provider>;
+    return <Provider store={Store}>{this.props.children}</Provider>;
   }
 }
 

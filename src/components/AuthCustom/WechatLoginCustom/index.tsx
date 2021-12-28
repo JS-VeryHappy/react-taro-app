@@ -3,7 +3,7 @@ import { View, OpenData } from '@tarojs/components';
 import styles from './index.module.scss';
 import { AtButton } from 'taro-ui';
 import Taro from '@tarojs/taro';
-import { miniprogramLogin } from '@/services/api/user';
+import { miniprogramLogin } from '@/services/api/miniprogram';
 import { setToken } from '@/utils/storage';
 import { userInfoAction } from '@/store/action';
 import { useDispatch } from 'react-redux';
