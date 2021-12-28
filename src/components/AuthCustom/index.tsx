@@ -1,6 +1,8 @@
 import React from 'react';
 import { View } from '@tarojs/components';
 import styles from './index.module.scss';
+import { useSelector } from 'react-redux';
+import Taro from '@tarojs/taro';
 
 declare type AuthCustomType = {
   /**
@@ -14,11 +16,21 @@ declare type AuthCustomType = {
 };
 
 const AuthCustom = (Props: AuthCustomType) => {
+  const userInfo = useSelector<any>((state) => state.userInfo);
+
   const { className } = Props;
+  const handlerClick = () => {
+    if (Taro.getEnv() === 'WEAPP') {
+    } else {
+      Taro.navigateTo({
+        url: '/pages/login/index',
+      });
+    }
+  };
   return (
     <View className={`${styles.authCustomWrapper} ${className ? className : ''}`}>
       {Props.children}
-      <View className={styles.authModal} />
+      {!userInfo && <View className={styles.authModal} onClick={handlerClick} />}
     </View>
   );
 };

@@ -1,6 +1,7 @@
 import { combineReducers } from 'redux';
+import { USER_INFO_UPDATE_STATE } from './constants';
 
-declare type ActionTypes = {
+export declare type ActionTypes = {
   /**
    * 更新的类型
    * 更新整个状态：global/UPDATE_STATE
@@ -12,22 +13,9 @@ declare type ActionTypes = {
   payload: any;
 };
 
-declare type GlobalTypes = {
-  /**
-   * 用户信息
-   */
-  userInfo?: object;
-  [propName: string]: any;
-};
-
-function global(
-  state: GlobalTypes = {
-    userInfo: {},
-  },
-  action: ActionTypes,
-): object {
+function userInfo(state: any = null, action: ActionTypes): object {
   switch (action.type) {
-    case 'global/UPDATE_STATE':
+    case USER_INFO_UPDATE_STATE:
       return { ...state, ...action.payload };
     default:
       return state;
@@ -35,5 +23,5 @@ function global(
 }
 
 export default combineReducers({
-  global,
+  userInfo,
 });
