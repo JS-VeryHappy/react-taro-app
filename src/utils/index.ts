@@ -40,6 +40,20 @@ export const requestDebounce = (fn: any, time: number) => {
   };
 };
 
+/* 扫码进入的参数转换成对象
+ * @param data
+ */
+export const sceneToObject = (scene: any) => {
+  const scenes = {};
+  if (scene) {
+    scene.split(',').forEach((item) => {
+      const arr = item.split(':');
+      scenes[arr[0]] = arr[1];
+    });
+  }
+  return scenes;
+};
+
 /**
  * 防抖函数
  * @param fn

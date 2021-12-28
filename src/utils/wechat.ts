@@ -1,4 +1,4 @@
-var jweixin = require('jweixin-module');
+const jweixin = require('jweixin-module');
 import { h5ShareConfig } from '@/http/api';
 
 /**

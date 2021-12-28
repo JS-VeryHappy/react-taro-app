@@ -2,7 +2,7 @@
   "miniprogramRoot": "dist/",
   "projectname": "myApp",
   "description": "react-taro",
-  "appid": "touristappid",
+  "appid": "wxa060e5796278725d",
   "setting": {
     "urlCheck": true,
     "es6": false,

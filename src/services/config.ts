@@ -1,6 +1,7 @@
 import Taro from '@tarojs/taro';
 import { convertObjToUrl } from '@/utils';
 import { MD5 } from 'crypto-js';
+import { getOpenId, getToken } from '@/utils/storage';
 
 declare type optionsTypes = {
   /**
@@ -76,13 +77,16 @@ const interceptor = function (chain: any) {
   const requestParams = chain.requestParams;
 
   const time: any = parseInt(new Date().getTime() / 1000 + '');
-  const token: string = Taro.getStorageSync('token');
+  const token: string = getToken();
 
   const header: any = {
     version: VERSION,
     sign: MD5(VERSION + time + SIGN_KEY).toString(),
     time: time,
   };
+  if (getOpenId()) {
+    header.openid = getOpenId();
+  }
   if (token) {
     header.Authorization = `Bearer ${token}`;
   }

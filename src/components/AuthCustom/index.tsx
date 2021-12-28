@@ -1,8 +1,9 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { View } from '@tarojs/components';
 import styles from './index.module.scss';
 import { useSelector } from 'react-redux';
 import Taro from '@tarojs/taro';
+import WechatLoginCustom from './WechatLoginCustom';
 
 declare type AuthCustomType = {
   /**
@@ -17,20 +18,33 @@ declare type AuthCustomType = {
 
 const AuthCustom = (Props: AuthCustomType) => {
   const userInfo = useSelector<any>((state) => state.userInfo);
+  const [showModel, setShowModel] = useState<boolean>(false);
 
   const { className } = Props;
   const handlerClick = () => {
     if (Taro.getEnv() === 'WEAPP') {
+      setShowModel(true);
     } else {
       Taro.navigateTo({
         url: '/pages/login/index',
       });
     }
   };
+  const handlerModelClick = () => {
+    setShowModel(false);
+  };
+  console.log('====================================');
+  console.log(userInfo);
+  console.log('====================================');
   return (
     <View className={`${styles.authCustomWrapper} ${className ? className : ''}`}>
       {Props.children}
-      {!userInfo && <View className={styles.authModal} onClick={handlerClick} />}
+      {!userInfo && (
+        <>
+          <View className={styles.authModal} onClick={handlerClick} />
+          {showModel && <WechatLoginCustom modelClick={handlerModelClick} />}
+        </>
+      )}
     </View>
   );
 };

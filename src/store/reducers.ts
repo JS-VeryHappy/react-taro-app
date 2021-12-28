@@ -1,5 +1,6 @@
 import { combineReducers } from 'redux';
 import { USER_INFO_UPDATE_STATE } from './constants';
+import defaultState from './state';
 
 export declare type ActionTypes = {
   /**
@@ -13,7 +14,7 @@ export declare type ActionTypes = {
   payload: any;
 };
 
-function userInfo(state: any = null, action: ActionTypes): object {
+function userInfo(state: any = defaultState.userInfo, action: ActionTypes): object {
   switch (action.type) {
     case USER_INFO_UPDATE_STATE:
       return { ...state, ...action.payload };

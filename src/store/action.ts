@@ -1,30 +1,10 @@
-import Taro from '@tarojs/taro';
-import Serv from '@service/index';
+import { USER_INFO_UPDATE_STATE } from './constants';
 
-const userInfoAction = () => {
+export const userInfoAction = (userInfo: any) => {
   return (dispatch) => {
-    try {
-      const token = Taro.getStorageSync('token');
-      if (token) {
-        Serv.fetchUserInfo().then((res) => {
-          const { data } = res;
-          if (!data.avatar) {
-            data.avatar = `${IMG_HTTP_URL}1.0.0/avatar.png`;
-          }
-          dispatch({
-            type: 'global/UPDATE_STATE',
-            payload: {
-              userInfo: data,
-            },
-          });
-        });
-      }
-    } catch (error) {
-      console.log(error);
-    }
+    dispatch({
+      type: USER_INFO_UPDATE_STATE,
+      payload: userInfo,
+    });
   };
-};
-
-export default {
-  userInfoAction,
 };

@@ -14,17 +14,19 @@
     box-sizing: border-box;
     width: 100%;
     padding: 30rpx;
-    background-color: #ffffff;
+    background-color: #fff;
     border-radius: 16rpx 16rpx 0 0;
-    --animate-duration: 0.5s;
+    // transform: translate3d(0, 100%, 0);
+
     &-intro {
       display: flex;
       flex-direction: column;
       align-items: center;
       justify-content: space-evenly;
       width: 100%;
-      color: #666666;
+      color: #666;
       font-size: 30rpx;
+
       &-img {
         width: 140rpx;
         height: 140rpx;
@@ -46,6 +48,7 @@
       justify-content: space-between;
       margin: 40rpx 0 60rpx;
       padding: 0 40rpx;
+
       &-btn {
         display: flex;
         align-items: center;
@@ -61,8 +64,8 @@
         }
       }
     }
+
     &-agree {
-      // padding-bottom: calc(env(safe-area-inset-bottom));
       color: #919293;
       font-size: 26rpx;
       text-align: center;
