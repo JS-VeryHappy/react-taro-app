@@ -33,9 +33,7 @@ const AuthCustom = (Props: AuthCustomType) => {
   const handlerModelClick = () => {
     setShowModel(false);
   };
-  console.log('====================================');
-  console.log(userInfo);
-  console.log('====================================');
+
   return (
     <View className={`${styles.authCustomWrapper} ${className ? className : ''}`}>
       {Props.children}

@@ -10,21 +10,24 @@ import {
   setOpenId,
   getOpenId,
   getToken,
+  setToken,
 } from '@/utils/storage';
 import { sceneToObject } from '@/utils';
 import { miniprogramStart } from '@/services/api/miniprogram';
 import { authIsLogin } from '@/services/api/user';
+import { h5Login } from '@/services/api/h5';
 import { Store } from './store';
 import { userInfoAction } from '@/store/action';
+import { isWechat } from '@/utils/wechat';
 
 import './app.scss';
 /**
  * 应用有新版本
  */
 const updateApp = (option: any) => {
-  const scene = option.scene;
-
   if (Taro.getEnv() === 'WEAPP') {
+    const scene = option.scene;
+
     if (scene !== 1154) {
       // 监听更新
       const updateManager = Taro.getUpdateManager();
@@ -53,31 +56,30 @@ const updateApp = (option: any) => {
  * 处理业务参数
  */
 const storageBusinessData = async (option: any) => {
-  /**
-   * 进入参数规定
-   * fid:传播人
-   * id:主业务id
-   */
-  const { query }: any = option;
-  // 进入业务场景值
-  const gscene = option.scene;
-  // 进入的参数
-  const { fid, id, scene } = query;
-
-  // 进入程序删除本地记录值
-  removeFromUid();
-  removeId();
-
-  // 如果是扫码进入取参数
-  const scenes = sceneToObject(scene);
-  // 存入全局传播人 关系可以本地打开全局使用
-  setFromUid(fid, scenes);
-  // 存入全局业务id
-  setId(id, scenes);
-  // 存入进入场景值
-  setScene(gscene);
-
   if (Taro.getEnv() === 'WEAPP') {
+    /**
+     * 进入参数规定
+     * fid:传播人
+     * id:主业务id
+     */
+    const { query }: any = option;
+    // 进入业务场景值
+    const gscene = option.scene;
+    // 进入的参数
+    const { fid, id, scene } = query;
+
+    // 进入程序删除本地记录值
+    removeFromUid();
+    removeId();
+
+    // 如果是扫码进入取参数
+    const scenes = sceneToObject(scene);
+    // 存入全局传播人 关系可以本地打开全局使用
+    setFromUid(fid, scenes);
+    // 存入全局业务id
+    setId(id, scenes);
+    // 存入进入场景值
+    setScene(gscene);
     if (!getOpenId()) {
       const loginRes: any = await Taro.login();
 
@@ -100,11 +102,38 @@ const storageBusinessData = async (option: any) => {
   }
 };
 
+const wehcatH5 = (option: any) => {
+  // if (isWechat() && !getToken()) {
+  //   if (option.code && option.state === 'STATE') {
+  //     //换取code去后台接口登陆
+  //     h5Login({
+  //       code: option.code,
+  //     })
+  //       .then((res) => {
+  //         setToken(res.data.token);
+  //         // @ts-ignore
+  //         Store.dispatch(userInfoAction(res.data.user));
+  //       })
+  //       .catch((e) => {
+  //         console.log(e);
+  //       });
+  //   } else {
+  //     //否则去微信授权
+  //     // uni.setStorageSync("beforeUrl", window.location.href);
+  //     const appUrl = encodeURIComponent(window.location.href);
+  //     const authUrl = `https://open.weixin.qq.com/connect/oauth2/authorize?appid=${process.env.VUE_APP_WECHAT_APP_ID}&redirect_uri=${appUrl}&response_type=code&scope=snsapi_userinfo&state=STATE#wechat_redirect`;
+  //     window.location.href = authUrl;
+  //     return;
+  //   }
+  // }
+};
+
 const getUserInfo = async () => {
   const res: any = await authIsLogin();
   // @ts-ignore
   Store.dispatch(userInfoAction(res.data));
 };
+
 class App extends Component {
   componentDidMount() {}
 
@@ -121,7 +150,8 @@ class App extends Component {
     }
   }
 
-  componentDidShow() {
+  componentDidShow(option) {
+    // wehcatH5(option);
     console.log('App Show');
   }
 
