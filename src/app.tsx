@@ -129,9 +129,11 @@ const wehcatH5 = (option: any) => {
 };
 
 const getUserInfo = async () => {
-  const res: any = await authIsLogin();
-  // @ts-ignore
-  Store.dispatch(userInfoAction(res.data));
+  try {
+    const res: any = await authIsLogin();
+    // @ts-ignore
+    Store.dispatch(userInfoAction(res.data));
+  } catch (error) {}
 };
 
 class App extends Component {

@@ -20,6 +20,7 @@ const config = {
     '@/utils': path.resolve(__dirname, '..', 'src/utils'),
     '@/hooks': path.resolve(__dirname, '..', 'src/hooks'),
     '@/store': path.resolve(__dirname, '..', 'src/store'),
+    '@/assets': path.resolve(__dirname, '..', 'src/assets'),
   },
   copy: {
     patterns: [],
@@ -48,6 +49,7 @@ const config = {
     },
   },
   h5: {
+    // 启动兼容插件
     router: {
       mode: 'browser',
     },

@@ -2,6 +2,9 @@ import Taro from '@tarojs/taro';
 import { convertObjToUrl } from '@/utils';
 import { MD5 } from 'crypto-js';
 import { getOpenId, getToken } from '@/utils/storage';
+import { removeToken } from '@/utils/storage';
+import { Store } from '@/store';
+import { clearUserInfoAction } from '@/store/action';
 
 declare type optionsTypes = {
   /**
@@ -48,6 +51,11 @@ const httpError = (http: any, errorMessageShow: boolean) => {
   };
   const message = httpErrorMsg[http.statusCode] || '未知错误';
 
+  if (http.statusCode == 401) {
+    removeToken();
+    // @ts-ignore
+    Store.dispatch(clearUserInfoAction());
+  }
   if (errorMessageShow) {
     Taro.showToast({ title: message, icon: 'none', duration: 2000 });
   }
@@ -147,7 +155,7 @@ const request = (url: string, options?: optionsTypes) => {
           reject(res);
         }
       },
-      fail(err) {
+      fail(err: any) {
         if (autoLoading) {
           Taro.hideLoading();
         }

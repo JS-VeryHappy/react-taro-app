@@ -13,9 +13,9 @@
     left: 0;
     box-sizing: border-box;
     width: 100%;
-    padding: 30rpx;
+    padding: 30px;
     background-color: #fff;
-    border-radius: 16rpx 16rpx 0 0;
+    border-radius: 16px 16px 0 0;
     // transform: translate3d(0, 100%, 0);
 
     &-intro {
@@ -25,19 +25,19 @@
       justify-content: space-evenly;
       width: 100%;
       color: #666;
-      font-size: 30rpx;
+      font-size: 30px;
 
       &-img {
-        width: 140rpx;
-        height: 140rpx;
-        margin-top: 30rpx;
+        width: 140px;
+        height: 140px;
+        margin-top: 30px;
         overflow: hidden;
         border-radius: 50%;
       }
 
       &-tips {
-        margin-top: 20rpx;
-        line-height: 72rpx;
+        margin-top: 20px;
+        line-height: 72px;
         text-align: center;
       }
     }
@@ -46,28 +46,28 @@
       display: flex;
       flex-direction: column;
       justify-content: space-between;
-      margin: 40rpx 0 60rpx;
-      padding: 0 40rpx;
+      margin: 40px 0 60px;
+      padding: 0 40px;
 
       &-btn {
         display: flex;
         align-items: center;
         justify-content: center;
         width: 100%;
-        padding: 20rpx 0;
+        padding: 20px 0;
         border-radius: 50rem !important;
 
         &-img {
-          width: 36rpx;
-          height: 30rpx;
-          margin-right: 10rpx;
+          width: 36px;
+          height: 30px;
+          margin-right: 10px;
         }
       }
     }
 
     &-agree {
       color: #919293;
-      font-size: 26rpx;
+      font-size: 26px;
       text-align: center;
     }
   }

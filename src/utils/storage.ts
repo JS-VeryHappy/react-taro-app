@@ -110,3 +110,11 @@ export const setToken = (token: string) => {
 export const getToken = () => {
   return Taro.getStorageSync('TOKEN');
 };
+
+/**
+ *  删除传播人openid
+ * @type {string}
+ */
+export const removeToken = () => {
+  return Taro.removeStorageSync('TOKEN');
+};
