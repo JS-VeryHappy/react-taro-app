@@ -1,6 +1,5 @@
 import React, { useEffect } from 'react';
 import { View, Text } from '@tarojs/components';
-// import { miniprogramLogin } from '@/services/api/user';
 import { AtButton } from 'taro-ui';
 import AuthCustom from '@/components/AuthCustom';
 
