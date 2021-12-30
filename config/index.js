@@ -55,7 +55,7 @@ const config = {
     },
     publicPath: '/',
     staticDirectory: 'static',
-    esnextModules: ['taro-ui'],
+    esnextModules: ['@taroify'],
     postcss: {
       autoprefixer: {
         enable: true,

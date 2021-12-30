@@ -1,6 +1,5 @@
 import React, { useState } from 'react';
-import { View, Text } from '@tarojs/components';
-import { AtForm, AtInput, AtButton } from 'taro-ui';
+import { Cell, Field, Button } from '@taroify/core';
 import { authLogin } from '@/services/api/user';
 import { useDispatch } from 'react-redux';
 import { userInfoAction } from '@/store/action';
@@ -28,32 +27,32 @@ const Login = () => {
     });
   };
   return (
-    <AtForm onSubmit={onSubmit}>
-      <AtInput
-        clear
-        name="phone"
-        title="账号"
-        maxlength={11}
-        type="phone"
-        placeholder="请输入电话"
-        value={from.value}
-        onChange={onValueChange.bind(null, 'phone')}
-      />
-      <AtInput
-        clear
-        name="password"
-        title="密码"
-        type="password"
-        maxlength={20}
-        placeholder="请输入密码"
-        value={from.value}
-        onChange={onValueChange.bind(null, 'password')}
-      />
-      <AtButton type="primary" size="small" formType="submit">
-        提交
-      </AtButton>
-      {/* <AtButton formType="reset">重置</AtButton> */}
-    </AtForm>
+    <>
+      <Cell.Group inset>
+        <Field
+          clearable
+          name="phone"
+          label="账号"
+          maxlength={11}
+          placeholder="请输入电话"
+          value={from.value}
+          onChange={onValueChange.bind(null, 'phone')}
+        />
+        <Field
+          clearable
+          name="password"
+          label="密码"
+          type="password"
+          maxlength={20}
+          placeholder="请输入密码"
+          value={from.value}
+          onChange={onValueChange.bind(null, 'password')}
+        />
+        <Button color="primary" size="small" block formType="submit" onClick={onSubmit}>
+          提交
+        </Button>
+      </Cell.Group>
+    </>
   );
 };
 

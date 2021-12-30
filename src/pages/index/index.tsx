@@ -1,6 +1,5 @@
 import React, { useEffect, useState } from 'react';
 import { View, Text } from '@tarojs/components';
-import { AtButton } from 'taro-ui';
 import AuthCustom from '@/components/AuthCustom';
 import TabbarCustom from '@/components/TabbarCustom';
 import NavBarCustom from '@/components/NavBarCustom';
@@ -8,6 +7,7 @@ import useLoadMore from '@/hooks/useLoadMore';
 import Taro, { useReachBottom } from '@tarojs/taro';
 import { lists } from '@/services/api/user';
 import styles from './index.module.scss';
+import { Button } from '@taroify/core';
 
 const Index = () => {
   const [optionState, LoadMoreNode, showLoading, hideLoading, isCheckLoading, loadHandle] =
@@ -40,15 +40,6 @@ const Index = () => {
   };
 
   useEffect(() => {
-    if (Taro.getEnv() === 'WEB') {
-      window.onscroll = function () {
-        //为了保证兼容性，这里取两个值，哪个有值取哪一个
-        //scrollTop就是触发滚轮事件时滚轮的高度
-        const scrollTop = document.documentElement.scrollTop || document.body.scrollTop;
-        console.log('滚动距离' + scrollTop);
-      };
-    }
-
     InfoHttp(1);
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
@@ -63,9 +54,9 @@ const Index = () => {
       <View className={styles.wrapper}>
         <Text className={styles.title}>为Taro而设计的Hooks Library</Text>
         <AuthCustom>
-          <AtButton type="primary" size="small" onClick={handlerClick}>
+          <Button color="primary" size="small" block onClick={handlerClick}>
             获取用户信息
-          </AtButton>
+          </Button>
         </AuthCustom>
 
         {Info.map((item, key) => {

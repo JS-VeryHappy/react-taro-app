@@ -35,6 +35,7 @@
     ".stylelintrc.js",
     ".prettierrc.js",
     "jest.config.js",
+    "babel.config.js",
     "global.d.ts",
     "mock/*"
   ],

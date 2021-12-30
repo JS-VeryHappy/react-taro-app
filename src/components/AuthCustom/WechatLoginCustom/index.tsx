@@ -1,12 +1,12 @@
 import React from 'react';
 import { View, OpenData } from '@tarojs/components';
 import styles from './index.module.scss';
-import { AtButton } from 'taro-ui';
 import Taro from '@tarojs/taro';
 import { miniprogramLogin } from '@/services/api/miniprogram';
 import { setToken } from '@/utils/storage';
 import { userInfoAction } from '@/store/action';
 import { useDispatch } from 'react-redux';
+import { Button } from '@taroify/core';
 
 declare type WechatLoginCustomType = {
   /**
@@ -64,16 +64,16 @@ const WechatLoginCustom = (Props: WechatLoginCustomType) => {
           </View>
         </View>
         <View className={styles['content-bottom']}>
-          <AtButton
-            type="primary"
+          <Button
+            color="primary"
             size="small"
             openType="getPhoneNumber"
-            circle
+            shape="circle"
             ripple-bg-color="#EC5959"
             onGetPhoneNumber={getUserProfile}
           >
             微信一键登录
-          </AtButton>
+          </Button>
         </View>
         <View className={styles['content-agree']}>授权登录即表示已阅读并同意《隐私协议》</View>
       </View>
