@@ -27,7 +27,7 @@ const Index = () => {
     showLoading();
     lists({
       page: page || optionState.page,
-      limit: 20,
+      limit: 30,
     })
       .then((res: any) => {
         const datas = [...Info, ...res.data.data];
@@ -40,6 +40,15 @@ const Index = () => {
   };
 
   useEffect(() => {
+    if (Taro.getEnv() === 'WEB') {
+      window.onscroll = function () {
+        //为了保证兼容性，这里取两个值，哪个有值取哪一个
+        //scrollTop就是触发滚轮事件时滚轮的高度
+        const scrollTop = document.documentElement.scrollTop || document.body.scrollTop;
+        console.log('滚动距离' + scrollTop);
+      };
+    }
+
     InfoHttp(1);
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
@@ -61,9 +70,10 @@ const Index = () => {
 
         {Info.map((item, key) => {
           return (
-            <Text key={item.id} className={styles.title}>
-              为Taro而设计的Hooks Library
-            </Text>
+            <View key={item.id} className={styles.title}>
+              <View> 为Taro而设计的Hooks Library</View>
+              <View> asdasdasdasdas Library</View>
+            </View>
           );
         })}
         <LoadMoreNode optionState={optionState} data={Info}>

@@ -22,7 +22,7 @@ declare type optionsTypes = {
   errorMessageShow?: boolean;
   /**
    * 是否请求自动显示loading
-   * @default true
+   * @default false
    */
   autoLoading?: boolean;
 
@@ -118,12 +118,13 @@ const interceptor = function (chain: any) {
  * @returns Promise
  */
 const request = (url: string, options?: optionsTypes) => {
-  const { data, params, errorMessageShow = true, autoLoading = true, ...rest } = options || {};
+  const { data, params, errorMessageShow = true, autoLoading = false, ...rest } = options || {};
 
   return new Promise<any>((resolve, reject) => {
     if (autoLoading) {
       Taro.showLoading({
         title: '数据请求中...',
+        mask: true,
       });
     }
     let uri = url;

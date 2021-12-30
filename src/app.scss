@@ -4,6 +4,11 @@
   display: none;
 }
 
+.taro_page {
+  min-height: 100vh;
+  max-height: none;
+}
+
 /* 数字前特殊字符 */
 .text-price::before {
   margin-right: 6px;
