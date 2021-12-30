@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import { View } from '@tarojs/components';
 import styles from './index.module.scss';
+import { Empty, Button } from '@taroify/core';
 
 declare type LoadMoreCustomType = {
   /**
@@ -44,6 +45,11 @@ declare type LoadMoreCustomType = {
    * @default 暂无数据
    */
   noDataText?: string;
+
+  /**
+   * 如果设置按钮文字讲会显示按钮
+   */
+  noDataBtnText?: string;
 };
 
 const LoadMoreCustom = (Props: LoadMoreCustomType) => {
@@ -55,6 +61,7 @@ const LoadMoreCustom = (Props: LoadMoreCustomType) => {
     loadingText = '正在加载更多...',
     noMoreText = '没有更多了',
     noDataText = '暂无数据',
+    noDataBtnText,
   } = Props;
 
   return (
@@ -63,7 +70,15 @@ const LoadMoreCustom = (Props: LoadMoreCustomType) => {
         children ? (
           children
         ) : (
-          <View>{noDataText}</View>
+          <Empty>
+            <Empty.Image />
+            <Empty.Description>{noDataText}</Empty.Description>
+            {noDataBtnText && (
+              <Button shape="round" color="danger" className={styles['bottom-button']}>
+                {noDataBtnText}
+              </Button>
+            )}
+          </Empty>
         )
       ) : (
         <View className={styles.loadMoreCustom}>

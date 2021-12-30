@@ -67,9 +67,7 @@ const Index = () => {
             </View>
           );
         })}
-        <LoadMoreNode optionState={optionState} data={Info}>
-          没有更多了！！！！！
-        </LoadMoreNode>
+        <LoadMoreNode optionState={optionState} data={Info} />
       </View>
       <TabbarCustom />
     </>
