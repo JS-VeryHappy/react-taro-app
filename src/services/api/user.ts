@@ -6,3 +6,7 @@ export const authIsLogin = () => {
 export const authLogin = (data: any) => {
   return postBody('/auth/login', data);
 };
+
+export const lists = (data: any) => {
+  return postBody('/lists', data);
+};

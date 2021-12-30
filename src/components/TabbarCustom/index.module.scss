@@ -58,3 +58,11 @@
     }
   }
 }
+
+.emptyBlock {
+  height: 116px;
+
+  ::after {
+    content: ' ';
+  }
+}

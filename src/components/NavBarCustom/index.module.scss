@@ -1,0 +1,12 @@
+.navBarCustom {
+  // display: flex;
+  box-sizing: border-box;
+}
+
+.emptyBlock {
+  height: 94px;
+
+  ::after {
+    content: ' ';
+  }
+}

@@ -159,11 +159,20 @@ const request = (url: string, options?: optionsTypes) => {
         if (autoLoading) {
           Taro.hideLoading();
         }
-        Taro.showToast({
-          title: '服务器连接异常，请稍后重试或联系我们！',
-          icon: 'none',
-          duration: 2000,
-        });
+        if (Taro.getEnv() === 'WEB') {
+          httpError(
+            {
+              statusCode: err.status,
+            },
+            errorMessageShow,
+          );
+        } else {
+          Taro.showToast({
+            title: '服务器连接异常，请稍后重试或联系我们！',
+            icon: 'none',
+            duration: 2000,
+          });
+        }
         reject(err);
       },
       complete() {},

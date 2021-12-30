@@ -24,27 +24,30 @@ const TabbarCustom = (Props: AuthCustomType) => {
   };
 
   return (
-    <View className={`${styles.tabbarCustom}`}>
-      <View className={`${styles.tabbar} shadow `}>
-        <View
-          className={`${styles.item} ${pageCur === 'home' ? styles.active : ''}`}
-          onClick={handlerClick.bind(null, '/pages/index/index')}
-        >
-          <Image className={styles.icon} src={indexPng} />
-          <Image className={styles['focus-icon']} src={indexOPng} />
-          <Text className={styles.label}>首页</Text>
-        </View>
+    <>
+      <View className={styles.emptyBlock}> </View>
+      <View className={`${styles.tabbarCustom}`}>
+        <View className={`${styles.tabbar} shadow `}>
+          <View
+            className={`${styles.item} ${pageCur === 'home' ? styles.active : ''}`}
+            onClick={handlerClick.bind(null, '/pages/index/index')}
+          >
+            <Image className={styles.icon} src={indexPng} />
+            <Image className={styles['focus-icon']} src={indexOPng} />
+            <Text className={styles.label}>首页</Text>
+          </View>
 
-        <View
-          className={`${styles.item} ${pageCur === 'my' ? styles.active : ''}`}
-          onClick={handlerClick.bind(null, '/pages/my/index')}
-        >
-          <Image className={styles.icon} src={myPng} />
-          <Image className={styles['focus-icon']} src={myOPng} />
-          <Text className={styles.label}>我的</Text>
+          <View
+            className={`${styles.item} ${pageCur === 'my' ? styles.active : ''}`}
+            onClick={handlerClick.bind(null, '/pages/my/index')}
+          >
+            <Image className={styles.icon} src={myPng} />
+            <Image className={styles['focus-icon']} src={myOPng} />
+            <Text className={styles.label}>我的</Text>
+          </View>
         </View>
       </View>
-    </View>
+    </>
   );
 };
 
