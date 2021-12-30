@@ -2,7 +2,11 @@ module.exports = {
   env: {
     NODE_ENV: '"production"',
   },
-  defineConstants: {},
+  defineConstants: {
+    API_URL: '"http://www.adminapi.com/wechat"',
+    VERSION: '"1.0.0"',
+    SIGN_KEY: '"zycfly"',
+  },
   mini: {},
   h5: {
     /**
