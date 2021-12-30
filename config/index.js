@@ -76,5 +76,10 @@ module.exports = function (merge) {
   if (process.env.NODE_ENV === 'development') {
     return merge({}, config, require('./dev'));
   }
-  return merge({}, config, require('./prod'));
+  let configPath = 'prod';
+  if (process.env.BUILD_ENV) {
+    configPath = `${configPath}-${process.env.BUILD_ENV}`;
+  }
+
+  return merge({}, config, require(`./${configPath}`));
 };
