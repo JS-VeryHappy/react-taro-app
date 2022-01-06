@@ -81,7 +81,7 @@ TypeScript官网： [https://www.tslang.cn/](https://www.tslang.cn/)
 
 ```
 
-## 文件结构
+## 文件结构大致
 
 ```txt
 ├── README.md //说明文件
