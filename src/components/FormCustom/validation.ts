@@ -1,6 +1,7 @@
 import * as _ from 'lodash';
 import { isPromise } from '@/utils';
 import type { RulesType } from './types';
+import * as customValidator from '@/utils/validator';
 
 function isEmptyValue(value: any) {
   if (Array.isArray(value)) {
@@ -21,13 +22,21 @@ function getRuleMessage(value: any, rule: RulesType) {
   return message;
 }
 
-function getSyncRule(value: any, rule: RulesType) {
+async function getSyncRule(value: any, rule: RulesType) {
   if (rule.required && isEmptyValue(value)) {
     return Promise.resolve(getRuleMessage(value, rule));
   }
 
   if (rule.pattern && !rule.pattern.test(String(value))) {
     return Promise.resolve(getRuleMessage(value, rule));
+  }
+
+  if (rule.type && customValidator[rule.type]) {
+    try {
+      await customValidator[rule.type](rule, value);
+    } catch (error) {
+      return Promise.resolve(getRuleMessage(value, rule));
+    }
   }
 }
 

@@ -43,7 +43,6 @@ declare type FieldPropsType = {
    */
   clearable?: boolean;
 };
-declare type RuleType = 'string' | 'number';
 
 declare type RulesType = {
   /**
@@ -55,9 +54,10 @@ declare type RulesType = {
    */
   message?: string | ((value: any, rule: RulesType) => string);
   /**
-   * 验证规则的类型
+   * 验证规则的类型 utills验证库的 所有导出
+   *
    */
-  type?: RuleType;
+  type?: any;
   /**
    * 通过函数进行校验	自定义规则
    */
@@ -67,9 +67,9 @@ declare type RulesType = {
    */
   pattern?: RegExp;
   /**
-   * 本项规则的触发时机，可选值为 onChange、onBlur
+   * 本项规则的触发时机，可选值为 onSubmit
    */
-  trigger?: 'onBlur' | 'onChange' | 'onSubmit';
+  trigger?: 'onSubmit';
   /**
    * 格式化函数，将表单项的值转换后进行校验
    */

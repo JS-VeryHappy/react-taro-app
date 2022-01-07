@@ -1,7 +1,5 @@
-import React, { useRef, useState } from 'react';
-import { View, Text } from '@tarojs/components';
-import TabbarCustom from '@/components/TabbarCustom';
-import NavBarCustom from '@/components/NavBarCustom';
+import React, { useRef } from 'react';
+import { View } from '@tarojs/components';
 import FormCustom from '@/components/FormCustom';
 import type { ColumnsType, FormCustomRefType } from '@/components/FormCustom/types';
 
@@ -49,11 +47,9 @@ const Index = () => {
 
   return (
     <>
-      <NavBarCustom title="首页" />
       <View className={styles.wrapper}>
         <FormCustom columns={columns} formRef={formCustomRef} onSubmit={onSubmit} />
       </View>
-      <TabbarCustom />
     </>
   );
 };
