@@ -1,0 +1,15 @@
+.form-custom {
+  .taroify-cell-group__title--inset {
+    padding: 30px 30px;
+  }
+
+  .taroify-cell__value {
+    display: flex;
+    flex: 2;
+    flex-direction: row;
+  }
+
+  .taroify-cell__title {
+    flex: 1;
+  }
+}
