@@ -22,7 +22,7 @@ const Index = () => {
       cellProps: {
         rules: [
           { required: true, message: '请填写手机' },
-          { type: 'isNumeric', message: '格式错误' },
+          { type: 'isTel', message: '电话格式错误' },
         ],
       },
     },

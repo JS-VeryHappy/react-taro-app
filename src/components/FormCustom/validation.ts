@@ -38,6 +38,29 @@ async function getSyncRule(value: any, rule: RulesType) {
       return Promise.resolve(getRuleMessage(value, rule));
     }
   }
+  if (rule.min) {
+    if (typeof value === 'number') {
+      if (value < rule.min) {
+        return Promise.resolve(getRuleMessage(value, rule));
+      }
+    } else {
+      if (value.length < rule.min) {
+        return Promise.resolve(getRuleMessage(value, rule));
+      }
+    }
+  }
+
+  if (rule.max) {
+    if (typeof value === 'number') {
+      if (value > rule.max) {
+        return Promise.resolve(getRuleMessage(value, rule));
+      }
+    } else {
+      if (value.length > rule.max) {
+        return Promise.resolve(getRuleMessage(value, rule));
+      }
+    }
+  }
 }
 
 function getValidatorRule(value: any, rule: RulesType) {

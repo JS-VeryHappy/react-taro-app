@@ -173,10 +173,10 @@ export const isFloat = async (rule: any, value: any) => {
   }
 };
 /**
- * 验证文字
+ * 验证中文
  */
-export const isWords = async (rule: any, value: any) => {
-  const regexp = /^[A-Z\s]+$/i;
+export const isChinese = async (rule: any, value: any) => {
+  const regexp = /^[\u4e00-\u9fa5]+$/gi;
   try {
     await matchRegexp(
       {
@@ -185,6 +185,88 @@ export const isWords = async (rule: any, value: any) => {
       value,
     );
   } catch (error) {
-    throw new Error(rule.message || '(文字)验证失败');
+    throw new Error(rule.message || '(中文)验证失败');
+  }
+};
+
+/**
+ * 验证手机号码
+ */
+export const isTel = async (rule: any, value: any) => {
+  const regexp = /^1\d{10}$/i;
+  try {
+    await matchRegexp(
+      {
+        regexp,
+      },
+      value,
+    );
+  } catch (error) {
+    throw new Error(rule.message || '(电话)验证失败');
+  }
+};
+
+/**
+ * 验证生成证
+ */
+export const isIdCard = async (rule: any, value: any) => {
+  const regexp = /^[1-9]\d{5}[1-9]\d{3}((0\d)|(1[0-2]))(([0|1|2]\d)|3[0-1])\d{3}([0-9]|X)$/i;
+  try {
+    await matchRegexp(
+      {
+        regexp,
+      },
+      value,
+    );
+  } catch (error) {
+    throw new Error(rule.message || '(身份证号码)验证失败');
+  }
+};
+
+/**
+ * 验证生成证
+ */
+export const isCarNo = async (rule: any, value: any) => {
+  // 新能源车牌
+  const xreg =
+    /^[京津沪渝冀豫云辽黑湘皖鲁新苏浙赣鄂桂甘晋蒙陕吉闽贵粤青藏川宁琼使领A-Z]{1}[A-Z]{1}(([0-9]{5}[DF]$)|([DF][A-HJ-NP-Z0-9][0-9]{4}$))/i;
+  // 旧车牌
+  const creg =
+    /^[京津沪渝冀豫云辽黑湘皖鲁新苏浙赣鄂桂甘晋蒙陕吉闽贵粤青藏川宁琼使领A-Z]{1}[A-Z]{1}[A-HJ-NP-Z0-9]{4}[A-HJ-NP-Z0-9挂学警港澳]{1}$/i;
+  try {
+    await matchRegexp(
+      {
+        xreg,
+      },
+      value,
+    );
+  } catch (e) {
+    try {
+      await matchRegexp(
+        {
+          creg,
+        },
+        value,
+      );
+    } catch (error) {
+      throw new Error(rule.message || '(车牌号)验证失败');
+    }
+  }
+};
+
+/**
+ * 金额,只允许2位小数
+ */
+export const isAmount = async (rule: any, value: any) => {
+  const regexp = /^([0-9]*[.]?[0-9])[0-9]{0,1}$/;
+  try {
+    await matchRegexp(
+      {
+        regexp,
+      },
+      value,
+    );
+  } catch (error) {
+    throw new Error(rule.message || '(金额)验证失败');
   }
 };

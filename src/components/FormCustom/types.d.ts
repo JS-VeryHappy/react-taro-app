@@ -74,6 +74,14 @@ declare type RulesType = {
    * 格式化函数，将表单项的值转换后进行校验
    */
   formatter?: (value: any, rule: RulesType) => string;
+  /**
+   * 最小长度或者最小值
+   */
+  min?: number;
+  /**
+   * 最大长度或者最大值
+   */
+  max?: number;
 };
 
 declare type CellPropsType = {
