@@ -12,4 +12,87 @@
   .taroify-cell__title {
     flex: 1;
   }
+
+  .taroify-input--readonly input::placeholder {
+    color: #ccc !important;
+  }
+
+  .picker-custom-multiple {
+    overflow: hidden;
+
+    .btn {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      height: 100px;
+      padding: var(--picker-action-padding, 0 var(--padding-md, 35px));
+      font-size: var(--picker-action-font-size);
+      background-color: transparent;
+      border: none 0;
+      cursor: pointer;
+
+      &:active {
+        opacity: var(--active-opacity);
+      }
+    }
+
+    .confirm {
+      color: var(--picker-confirm-action-color, var(--text-link-color, #576b95));
+    }
+
+    .cancel {
+      color: var(--picker-cancel-action-color, var(--gray-6, #969799));
+    }
+
+    &-handlers {
+      position: relative;
+      display: -webkit-box;
+      display: -webkit-flex;
+      display: flex;
+      -webkit-align-items: center;
+      align-items: center;
+      -webkit-justify-content: space-between;
+      justify-content: space-between;
+      box-sizing: border-box;
+      width: 100%;
+      height: 90px;
+      font-size: var(--picker-action-font-size);
+      background: #fff;
+      -webkit-box-pack: justify;
+      -webkit-box-align: center;
+    }
+
+    &-columns {
+      height: 440px;
+      overflow: auto;
+      color: #000;
+      line-height: 88px;
+      text-align: center;
+
+      &-item {
+        display: flex;
+        justify-content: center;
+        height: 88px;
+        padding: 0 10px;
+
+        &.is-selected {
+          color: #1989fa;
+        }
+
+        &.is-disabled {
+          color: #ccc;
+        }
+
+        .label {
+          flex: 1;
+        }
+
+        .icon {
+          position: absolute;
+          right: 40px;
+          margin-left: auto;
+        }
+      }
+    }
+  }
 }

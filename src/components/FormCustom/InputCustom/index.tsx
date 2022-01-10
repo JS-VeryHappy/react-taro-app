@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React from 'react';
 import type { ComponentsPropsType } from './../types';
 import { Input } from '@taroify/core';
 

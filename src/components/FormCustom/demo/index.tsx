@@ -20,6 +20,7 @@ const Index = () => {
       cellProps: {
         rules: [
           { required: true, message: '请填写手机' },
+          // 验证规则 可以使用utils/validator.ts
           { type: 'isNumeric', message: '格式错误' },
         ],
       },

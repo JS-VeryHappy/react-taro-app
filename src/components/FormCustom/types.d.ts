@@ -1,4 +1,4 @@
-declare type OptionsType = {
+export declare type OptionsType = {
   /**
    * 显示内容
    */
@@ -7,6 +7,10 @@ declare type OptionsType = {
    * 值
    */
   value: string | number;
+  /**
+   * 值禁用
+   */
+  disabled?: boolean;
 };
 
 declare type FieldPropsType = {
@@ -22,6 +26,16 @@ declare type FieldPropsType = {
    * 需要传递的选择数据
    */
   options?: OptionsType[];
+  /**
+   * 是否是多列
+   * @default false
+   */
+  multiple?: boolean;
+  /**
+   * 多选最大选择数量
+   * @default 3
+   */
+  multipleLength?: number;
   /**
    * 密码模式
    */
@@ -54,7 +68,7 @@ declare type RulesType = {
    */
   message?: string | ((value: any, rule: RulesType) => string);
   /**
-   * 验证规则的类型 utills验证库的 所有导出
+   * 验证规则的类型 utils/validator.ts 验证库的 所有导出
    *
    */
   type?: any;
@@ -130,7 +144,7 @@ declare type CellPropsType = {
 /**
  * 可以使用的表单组件类型
  */
-declare type ValueType = 'InputCustom' | 'CellGroup';
+declare type ValueType = 'InputCustom' | 'SelectCustom' | 'CellGroup';
 
 export declare type ColumnsType = {
   /**
@@ -192,7 +206,7 @@ export declare type FormCustomType = {
  */
 export declare type ComponentsPropsType = {
   /**
-   * 传递进组件的值
+   * 传递进组件的值 多选或者多列 是数组
    */
   value: any;
   /**
@@ -200,14 +214,10 @@ export declare type ComponentsPropsType = {
    */
   onChange: (value: any) => void | undefined;
   /**
-   * 传递给组件的属性
-   */
-  fieldProps?: FieldPropsType;
-  /**
    *
    */
   placeholder?: string;
-};
+} & FieldPropsType;
 export declare type FormCustomRefType = {
   setFieldsValue?: (params: any) => void;
   getFieldsValue?: (name?: string | string[]) => object;
