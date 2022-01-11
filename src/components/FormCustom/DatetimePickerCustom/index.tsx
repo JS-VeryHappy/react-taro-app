@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import type { ComponentsPropsType } from './../types';
 import { DatetimePicker, Popup, Input } from '@taroify/core';
-import moment from 'moment';
+import * as dayjs from 'dayjs';
 
 const DatetimePickerCustom = (Props: ComponentsPropsType) => {
   const {
@@ -34,7 +34,7 @@ const DatetimePickerCustom = (Props: ComponentsPropsType) => {
 
   const nowOnChange = (nValue: any) => {
     if (typeof onChange === 'function') {
-      onChange(moment(nValue).format('YYYY-MM-DD HH:mm:ss'));
+      onChange(dayjs(nValue).format('YYYY-MM-DD HH:mm:ss'));
     }
   };
   if (!newValue) {
@@ -45,7 +45,7 @@ const DatetimePickerCustom = (Props: ComponentsPropsType) => {
     <>
       <Input
         readonly
-        value={value ? moment(value).format(datetimeShowFormat) : ''}
+        value={value ? dayjs(value).format(datetimeShowFormat) : ''}
         placeholder={placeholder}
         onClick={() => setOpen(true)}
       />

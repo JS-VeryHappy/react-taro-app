@@ -50,6 +50,52 @@ const config = {
         },
       },
     },
+    commonChunks: [
+      'runtime',
+      'vendors',
+      'taro',
+      'common',
+      'custom-components',
+      'taroify',
+      'custom-common',
+      'react-vendor',
+    ],
+    webpackChain(chain, webpack) {
+      chain.merge({
+        optimization: {
+          minimize: true,
+          splitChunks: {
+            chunks: 'all',
+            cacheGroups: {
+              'custom-components': {
+                test: /[\\/]src[\\/](components).*[\\/]/,
+                name: 'custom-components',
+                enforce: true,
+                priority: 5,
+              },
+              taroify: {
+                test: /[\\/]node_modules[\\/](@taroify|taroify).*[\\/]/,
+                name: 'taroify',
+                enforce: true,
+                priority: 5,
+              },
+              'custom-common': {
+                test: /[\\/]node_modules[\\/](dayjs|lodash).*[\\/]/,
+                name: 'custom-common',
+                enforce: true,
+                priority: 5,
+              },
+              'react-vendor': {
+                test: /[\\/]node_modules[\\/](react).*[\\/]/,
+                name: 'react-vendor',
+                enforce: true,
+                priority: 5,
+              },
+            },
+          },
+        },
+      });
+    },
   },
   h5: {
     // 启动兼容插件
