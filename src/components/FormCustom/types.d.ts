@@ -56,6 +56,42 @@ declare type FieldPropsType = {
    * 显示清楚按钮
    */
   clearable?: boolean;
+
+  /**
+   * 选择时间类型
+   * @default date
+   */
+  datetimePickerType?:
+    | 'date'
+    | 'time'
+    | 'datetime'
+    | 'date-hour'
+    | 'date-minute'
+    | 'year-month'
+    | 'month-day'
+    | 'hour-minute';
+  /**
+   * 选择时间最小值
+   */
+  datetimePickerMinDate?: Date;
+  /**
+   * 选择时间最大值
+   */
+  datetimePickermaxDate?: Date;
+  /**
+   * 选择时间默认值
+   * @default new Date()
+   */
+  datetimeDefaultValue?: Date;
+  /**
+   * 时间显示格式
+   * @default 'YYYY-MM-DD'
+   */
+  datetimeShowFormat?: string;
+  /**
+   * 其他自定义组件的参数
+   */
+  [key: string]: any;
 };
 
 declare type RulesType = {
@@ -144,7 +180,7 @@ declare type CellPropsType = {
 /**
  * 可以使用的表单组件类型
  */
-declare type ValueType = 'InputCustom' | 'SelectCustom' | 'CellGroup';
+declare type ValueType = 'InputCustom' | 'SelectCustom' | 'DatetimePickerCustom' | 'CellGroup';
 
 export declare type ColumnsType = {
   /**

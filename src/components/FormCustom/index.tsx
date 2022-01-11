@@ -24,9 +24,10 @@ const FormCustom = (Props: FormCustomType) => {
       if (formRules) {
         rules = formRules[field];
       }
-      const promise: any = validateRules(formData[field], rules);
-
-      promises.push(promise);
+      if (rules) {
+        const promise: any = validateRules(formData[field], rules);
+        promises.push(promise);
+      }
     });
 
     return new Promise(async (resolve, reject) => {
@@ -96,6 +97,8 @@ const FormCustom = (Props: FormCustomType) => {
             ...newFormRules,
             [`${newColumn.dataIndex}`]: rules,
           };
+        } else {
+          newColumn.cellProps = { ...cellProps };
         }
 
         // 子组件属性处理

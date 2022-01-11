@@ -14,6 +14,7 @@ const Index = () => {
     {
       label: '数值1',
       value: 1,
+      disabled: true,
     },
     {
       label: '数值2',
@@ -53,6 +54,15 @@ const Index = () => {
     },
   ];
   const columns: ColumnsType[] = [
+    {
+      title: '日期',
+      dataIndex: 'date',
+      ValueType: 'DatetimePickerCustom',
+      fieldProps: {
+        placeholder: '请选择日期',
+        datetimePickerType: 'date',
+      },
+    },
     {
       title: '选择器(单选)',
       dataIndex: 'select1',
