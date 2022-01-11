@@ -1,4 +1,4 @@
-import request from './config';
+import request, { uploadFile } from './config';
 
 const requestQuery = (url: string, options: any) => {
   return request(url, options);
@@ -104,7 +104,7 @@ export const postDownload = async (url: string, data?: any, options?: any) => {
     responseType: 'blob',
     getResponse: true,
   });
-
+  return res;
   // return downloadFile('blob', {
   //   data: res.data,
   //   headers: {
@@ -119,31 +119,11 @@ export const postDownload = async (url: string, data?: any, options?: any) => {
  * @param data // 表单数据
  * @param options // 额外配置
  */
-export function postUploadFile(url: string, data?: any, options?: any) {
-  let formData: any = {};
-
-  if (data instanceof FormData === false) {
-    formData = new FormData();
-    Object.keys(data).forEach((key) => {
-      if (data[key] instanceof Array) {
-        data[key].forEach((item: any) => {
-          formData.append(key, item);
-        });
-        return;
-      }
-      formData.append(key, data[key]);
-    });
-  } else {
-    formData = data;
-  }
-
-  return requestQuery(url, {
-    method: 'post',
-    data: formData,
-    // headers: {
-    //   'Content-Type': 'multipart/form-data',
-    // },
-    requestType: 'form',
+export function postUploadFile(url: string, filePath: string, data?: any, options?: any) {
+  return uploadFile(url, {
+    // method: 'post',
+    data: data,
+    filePath: filePath,
     ...options,
   });
 }

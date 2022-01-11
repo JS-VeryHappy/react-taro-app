@@ -1,11 +1,12 @@
-import React, { useEffect, useState, useRef } from 'react';
-import type { FormCustomType, ColumnsType, FormCustomRefType, RulesType } from './types';
-import { Form, Cell, Button, Field } from '@taroify/core';
+import React, { useEffect, useState } from 'react';
+import type { FormCustomType, ColumnsType, RulesType } from './types';
+import { Cell, Button } from '@taroify/core';
 import { View } from '@tarojs/components';
 import './index.scss';
 import * as components from './components';
 import { validateRules } from './validation';
 import Taro from '@tarojs/taro';
+import { ArrowRight } from '@taroify/icons';
 
 declare type newColumnsType = ColumnsType & {
   componentProps?: any;
@@ -84,6 +85,16 @@ const FormCustom = (Props: FormCustomType) => {
           align: 'start',
           size: 'large',
         };
+
+        // 如果是选择这显示箭头
+        const rightIcon = ['SelectCustom', 'DatetimePickerCustom'];
+        if (rightIcon.includes(newColumn.ValueType)) {
+          cellProps.clickable = true;
+          cellProps.rightIcon = <ArrowRight />;
+        } else {
+          cellProps.rightIcon = <ArrowRight style={{ position: 'relative', zIndex: -1 }} />;
+        }
+
         if (newColumn.cellProps) {
           const { rules, ...cellRest } = newColumn.cellProps;
           let hasRequired = false;

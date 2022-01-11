@@ -1,5 +1,5 @@
-import React, { useRef, useState } from 'react';
-import { View, Text } from '@tarojs/components';
+import React, { useRef } from 'react';
+import { View } from '@tarojs/components';
 import TabbarCustom from '@/components/TabbarCustom';
 import NavBarCustom from '@/components/NavBarCustom';
 import FormCustom from '@/components/FormCustom';
@@ -114,6 +114,15 @@ const Index = () => {
       },
       cellProps: {
         rules: [{ required: true, message: '请填写密码' }],
+      },
+    },
+    {
+      title: '图片',
+      dataIndex: 'imgs',
+      ValueType: 'UploaderCustom',
+      fieldProps: {
+        placeholder: '请选择图片',
+        maxFiles: 3,
       },
     },
   ];

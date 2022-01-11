@@ -81,34 +81,22 @@ const codeError = (data: any, errorMessageShow: boolean) => {
  * @param chain
  * @returns
  */
-const interceptor = function (chain: any) {
-  const requestParams = chain.requestParams;
-
+const interceptorHeader = function (header: any) {
   const time: any = parseInt(new Date().getTime() / 1000 + '');
   const token: string = getToken();
 
-  const header: any = {
+  const newHeader: any = {
     version: VERSION,
     sign: MD5(VERSION + time + SIGN_KEY).toString(),
     time: time,
   };
   if (getOpenId()) {
-    header.openid = getOpenId();
+    newHeader.openid = getOpenId();
   }
   if (token) {
-    header.Authorization = `Bearer ${token}`;
+    newHeader.Authorization = `Bearer ${token}`;
   }
-  return chain
-    .proceed({
-      ...requestParams,
-      header: {
-        ...requestParams.header,
-        ...header,
-      },
-    })
-    .then((res: any) => {
-      return res;
-    });
+  return { ...header, ...newHeader };
 };
 /**
  * 请求封装
@@ -118,7 +106,14 @@ const interceptor = function (chain: any) {
  * @returns Promise
  */
 const request = (url: string, options?: optionsTypes) => {
-  const { data, params, errorMessageShow = true, autoLoading = false, ...rest } = options || {};
+  const {
+    data,
+    params,
+    errorMessageShow = true,
+    autoLoading = false,
+    header,
+    ...rest
+  } = options || {};
 
   return new Promise<any>((resolve, reject) => {
     if (autoLoading) {
@@ -131,13 +126,90 @@ const request = (url: string, options?: optionsTypes) => {
     if (params) {
       uri = convertObjToUrl(url, params);
     }
-    Taro.addInterceptor(interceptor);
+    const newHeader = interceptorHeader(header);
 
     Taro.request({
       url: API_URL + uri,
       data: data,
+      header: newHeader,
       ...rest,
       success: (res: any) => {
+        if (autoLoading) {
+          Taro.hideLoading();
+        }
+        if (res.statusCode === 200) {
+          const { code } = res.data;
+          if (code === 0) {
+            resolve(res.data);
+          } else {
+            // 业务错误
+            codeError(res.data, errorMessageShow);
+            reject(res.data);
+          }
+        } else {
+          // http码错误
+          httpError(res, errorMessageShow);
+          reject(res);
+        }
+      },
+      fail(err: any) {
+        if (autoLoading) {
+          Taro.hideLoading();
+        }
+        if (Taro.getEnv() === 'WEB') {
+          httpError(
+            {
+              statusCode: err.status,
+            },
+            errorMessageShow,
+          );
+        } else {
+          Taro.showToast({
+            title: '服务器连接异常，请稍后重试或联系我们！',
+            icon: 'none',
+            duration: 2000,
+          });
+        }
+        reject(err);
+      },
+      complete() {},
+    });
+  });
+};
+
+export const uploadFile = (url: string, options?: optionsTypes) => {
+  const {
+    filePath,
+    data,
+    params,
+    errorMessageShow = true,
+    autoLoading = true,
+    header,
+    ...rest
+  } = options || {};
+
+  return new Promise<any>((resolve, reject) => {
+    if (autoLoading) {
+      Taro.showLoading({
+        title: '文件上传中...',
+        mask: true,
+      });
+    }
+    let uri = url;
+    if (params) {
+      uri = convertObjToUrl(url, params);
+    }
+    const newHeader = interceptorHeader(header);
+
+    Taro.uploadFile({
+      url: API_URL + uri,
+      filePath: filePath,
+      formData: data,
+      name: 'file',
+      header: newHeader,
+      ...rest,
+      success: (res: any) => {
+        res.data = JSON.parse(res.data);
         if (autoLoading) {
           Taro.hideLoading();
         }

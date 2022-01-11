@@ -89,6 +89,14 @@ declare type FieldPropsType = {
    */
   datetimeShowFormat?: string;
   /**
+   * 限制上传文件的后缀名
+   */
+  uploaderFormat?: [];
+  /**
+   * 限制上传图片的大小 单位kb
+   */
+  uploaderSize?: number;
+  /**
    * 其他自定义组件的参数
    */
   [key: string]: any;
@@ -180,7 +188,12 @@ declare type CellPropsType = {
 /**
  * 可以使用的表单组件类型
  */
-declare type ValueType = 'InputCustom' | 'SelectCustom' | 'DatetimePickerCustom' | 'CellGroup';
+declare type ValueType =
+  | 'InputCustom'
+  | 'SelectCustom'
+  | 'DatetimePickerCustom'
+  | 'UploaderCustom'
+  | 'CellGroup';
 
 export declare type ColumnsType = {
   /**
@@ -254,6 +267,7 @@ export declare type ComponentsPropsType = {
    */
   placeholder?: string;
 } & FieldPropsType;
+
 export declare type FormCustomRefType = {
   setFieldsValue?: (params: any) => void;
   getFieldsValue?: (name?: string | string[]) => object;

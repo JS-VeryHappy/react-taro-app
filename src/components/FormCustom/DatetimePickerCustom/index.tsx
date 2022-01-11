@@ -12,6 +12,7 @@ const DatetimePickerCustom = (Props: ComponentsPropsType) => {
     datetimePickermaxDate,
     datetimeDefaultValue,
     datetimeShowFormat = 'YYYY-MM-DD',
+    placeholder,
     ...rest
   } = Props;
 
@@ -45,11 +46,12 @@ const DatetimePickerCustom = (Props: ComponentsPropsType) => {
       <Input
         readonly
         value={value ? moment(value).format(datetimeShowFormat) : ''}
-        {...rest}
+        placeholder={placeholder}
         onClick={() => setOpen(true)}
       />
       <Popup mountOnEnter={false} open={open} rounded placement="bottom" onClose={setOpen}>
         <DatetimePicker
+          {...rest}
           value={newValue}
           type={datetimePickerType}
           min={datetimePickerMinDate}

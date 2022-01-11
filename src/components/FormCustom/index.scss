@@ -11,6 +11,7 @@
 
   .taroify-cell__title {
     flex: 1;
+    flex-shrink: 0;
   }
 
   .taroify-input--readonly input::placeholder {
@@ -94,5 +95,17 @@
         }
       }
     }
+  }
+
+  .preview-cover {
+    position: absolute;
+    bottom: 0;
+    box-sizing: border-box;
+    width: 100%;
+    padding: 4px * 2;
+    color: #fff;
+    font-size: 12px * 2;
+    text-align: center;
+    background: rgba(0, 0, 0, 0.3);
   }
 }
