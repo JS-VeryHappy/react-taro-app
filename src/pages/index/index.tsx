@@ -138,7 +138,15 @@ const Index = () => {
       <NavBarCustom title="首页" />
       <View className={styles.wrapper}>
         <FormCustom
-          initialValues={{ select1: 1, select2: [1, 2, 3], phone: '12', password: 'asdasd' }}
+          initialValues={{
+            select1: 1,
+            select2: [1, 2, 3],
+            phone: '12',
+            password: 'asdasd',
+            imgs: [
+              'http://www.adminapi.com/uploads/wechat/common/2022-01-11/43cd43c015286ab82e9da89c7f38fcfb/nwPLekTU0ZLma1f8928a3cc9b06ca6a417952f2ef3fa.jpeg',
+            ],
+          }}
           columns={columns}
           formRef={formCustomRef}
           onSubmit={onSubmit}

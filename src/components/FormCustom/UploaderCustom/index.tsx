@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import type { ComponentsPropsType } from './../types';
 import { Uploader } from '@taroify/core';
 import Taro from '@tarojs/taro';
@@ -16,11 +16,36 @@ const UploaderCustom = (Props: ComponentsPropsType) => {
   } = Props;
   const [files, setFiles] = useState<any>([]);
 
-  // const nowOnChange = (e: any) => {
-  //   if (typeof onChange === 'function') {
-  //     onChange(e.detail.value);
-  //   }
-  // };
+  useEffect(() => {
+    if (value) {
+      if (maxFiles === 1) {
+        setFiles([
+          {
+            url: value,
+          },
+        ]);
+      } else {
+        setFiles(
+          value.map((url: string) => {
+            return {
+              url: url,
+            };
+          }),
+        );
+      }
+    }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
+
+  const nowOnChange = (changeFiles: any) => {
+    if (typeof onChange === 'function') {
+      if (maxFiles === 1) {
+        onChange(changeFiles[0]);
+      } else {
+        onChange(changeFiles);
+      }
+    }
+  };
 
   const onUpload = () => {
     Taro.chooseImage({
@@ -64,14 +89,16 @@ const UploaderCustom = (Props: ComponentsPropsType) => {
         }
       }
 
-      publicUploadFile(file, {
+      publicUploadFile(file.path, {
         path: prefixPath,
       })
         .then((res: any) => {
           newFiles.push({
             url: res.data.src,
           });
+
           setFiles(newFiles);
+          nowOnChange(newFiles);
         })
         .catch((err: any) => {
           console.log(err);
@@ -79,28 +106,32 @@ const UploaderCustom = (Props: ComponentsPropsType) => {
     });
   };
 
-  const onRemove = (image: any) => {
+  const onRemove = (index: any, e: any) => {
     const newFiles = [...files];
-    setFiles(newFiles.filter((item) => item !== image));
+    newFiles.splice(index, 1);
+    setFiles(newFiles);
+    nowOnChange(newFiles);
+    e.stopPropagation();
   };
 
   const previewImage = (url: string) => {
     Taro.previewImage({
       current: url, // 当前显示图片的http链接
-      urls: files, // 需要预览的图片http链接列表
+      urls: files.map((file: any) => file.url), // 需要预览的图片http链接列表
     });
   };
+
   return (
     <>
       <Uploader value={files} onUpload={onUpload} {...rest}>
-        {files.map((image: any) => (
+        {files.map((image: any, index: number) => (
           <Uploader.Image
             key={image.url}
             url={image.url}
             name={image.name}
             type={image.type}
             onClick={() => previewImage(image.url)}
-            onRemove={() => onRemove(image)}
+            onRemove={(e: any) => onRemove(index, e)}
           >
             {/* <View className="preview-cover taroify-ellipsis">{image.name}</View> */}
           </Uploader.Image>

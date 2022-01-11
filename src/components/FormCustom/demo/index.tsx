@@ -114,6 +114,15 @@ const FormCustomDemo1 = () => {
         rules: [{ required: true, message: '请填写密码' }],
       },
     },
+    {
+      title: '图片',
+      dataIndex: 'imgs',
+      ValueType: 'UploaderCustom',
+      fieldProps: {
+        placeholder: '请选择图片',
+        maxFiles: 3,
+      },
+    },
   ];
 
   const onSubmit = (value: any) => {

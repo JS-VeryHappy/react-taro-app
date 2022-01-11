@@ -1,5 +1,3 @@
-import * as _ from 'lodash';
-
 const reg =
   /(((^https?:(?:\/\/)?)(?:[-;:&=\+\$,\w]+@)?[A-Za-z0-9.-]+(?::\d+)?|(?:www.|[-;:&=\+\$,\w]+@)[A-Za-z0-9.-]+)((?:\/[\+~%\/.\w-_]*)?\??(?:[-\+=&;%@.\w_]*)#?(?:[\w]*))?)$/;
 
@@ -251,5 +249,5 @@ export const uuid = () => {
 };
 
 export function isPromise<T = any>(val: any): val is Promise<T> {
-  return _.isObjectLike(val) && _.isFunction((val as Promise<T>).then) && _.isFunction(val.catch);
+  return typeof (val as Promise<T>).then === 'function' && typeof val.catch === 'function';
 }

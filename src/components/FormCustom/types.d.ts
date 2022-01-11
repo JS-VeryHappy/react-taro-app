@@ -97,6 +97,11 @@ declare type FieldPropsType = {
    */
   uploaderSize?: number;
   /**
+   * 上传路径前缀
+   * @default common
+   */
+  prefixPath?: string;
+  /**
    * 其他自定义组件的参数
    */
   [key: string]: any;

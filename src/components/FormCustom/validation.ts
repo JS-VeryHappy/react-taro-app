@@ -1,4 +1,3 @@
-import * as _ from 'lodash';
 import { isPromise } from '@/utils';
 import type { RulesType } from './types';
 import * as customValidator from '@/utils/validator';
@@ -16,7 +15,7 @@ function isEmptyValue(value: any) {
 function getRuleMessage(value: any, rule: RulesType) {
   const { message } = rule;
 
-  if (_.isFunction(message)) {
+  if (typeof message === 'function') {
     return message(value, rule);
   }
   return message;
