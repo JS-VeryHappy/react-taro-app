@@ -299,6 +299,15 @@ export declare type FormCustomType = {
    * initialValues 表单默认数据
    */
   columnBefor?: (column: ColumnsType[], initialValues: any) => ColumnsType[];
+
+  /**
+   * 配置指定请求获取表单默认数据
+   */
+  initialValuesRequest?: (params: any) => any;
+  /**
+   * 发送请求的番薯
+   */
+  initialValuesRequestParams?: Record<string, any>;
   /**
    * 初始化数据之前 可以修改数据返回
    */

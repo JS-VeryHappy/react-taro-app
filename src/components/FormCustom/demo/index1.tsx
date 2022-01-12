@@ -1,14 +1,17 @@
 import React, { useRef } from 'react';
 import { View } from '@tarojs/components';
-import TabbarCustom from '@/components/TabbarCustom';
-import NavBarCustom from '@/components/NavBarCustom';
 import FormCustom from '@/components/FormCustom';
 import type { ColumnsType, FormCustomRefType, OptionsType } from '@/components/FormCustom/types';
 import { authLogin, lists } from '@/services/api/user';
 
 import styles from './index.module.scss';
 
-const Index = () => {
+/**
+ * 表单组件高级使用
+ * 设置表单字段，远侧获取赋值表单默认值，监听数据变化
+ * 赋值和提交前钩子改变数据，配置请求地址自动请求，监听请求结构处理业务逻辑
+ */
+const FormCustomDemo2 = () => {
   const formCustomRef = useRef<FormCustomRefType>();
 
   const options: OptionsType[] = [
@@ -144,10 +147,10 @@ const Index = () => {
   const submitOnDone = (params: any) => {
     console.log('表单提交完成钩子');
     console.log(params);
+    // ...处理业务逻辑
   };
   return (
     <>
-      <NavBarCustom title="首页" />
       <View className={styles.wrapper}>
         <FormCustom
           columns={columns}
@@ -161,9 +164,8 @@ const Index = () => {
           submitOnDone={submitOnDone}
         />
       </View>
-      <TabbarCustom />
     </>
   );
 };
 
-export default Index;
+export default FormCustomDemo2;

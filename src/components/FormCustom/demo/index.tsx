@@ -5,6 +5,10 @@ import type { ColumnsType, FormCustomRefType, OptionsType } from '@/components/F
 
 import styles from './index.module.scss';
 
+/**
+ * 表单组件普通使用
+ * 设置表单字段，赋值默认值，监听数据变化
+ */
 const FormCustomDemo1 = () => {
   const formCustomRef = useRef<FormCustomRefType>();
 
@@ -127,15 +131,12 @@ const FormCustomDemo1 = () => {
 
   //点击提交
   const onSubmit = (value: any) => {
-    console.log('====================================');
+    console.log('表单点击提交钩子');
     console.log(value);
-    console.log('====================================');
   };
-  // 数据变换
-  const onValueChange = (values: any) => {
-    console.log('====================================');
-    console.log(values);
-    console.log('====================================');
+  const onValueChange = (values: any, config: any) => {
+    console.log('表单数据变换钩子');
+    console.log(values, config, formCustomRef);
   };
 
   return (

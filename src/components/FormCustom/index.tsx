@@ -8,6 +8,7 @@ import { validateRules } from './validation';
 import Taro from '@tarojs/taro';
 import { ArrowRight } from '@taroify/icons';
 import { deepCopy } from '@/utils';
+import { responseConfig } from '@/services/config';
 
 declare type newColumnsType = ColumnsType & {
   componentProps?: any;
@@ -21,13 +22,15 @@ const FormCustom = (Props: FormCustomType) => {
   const customFormRef = useRef<FormCustomRefType>();
 
   const {
+    initialValues,
+    initialValuesRequest,
+    initialValuesRequestParams,
     initialValuesBefor,
     submitValuesBefor,
     submitRequest,
     submitOnDone,
     columnBefor,
     columns,
-    initialValues,
     onValueChange,
     formRef,
     onSubmit,
@@ -229,19 +232,45 @@ const FormCustom = (Props: FormCustomType) => {
       setFormColumns(newColumns);
       setFormRules(newFormRules);
 
-      // 如果有传递初始值默认复制 否者全部设置为null
-      if (initialValues) {
-        newinitialValues = { ...initialValues };
+      if (initialValuesRequest) {
+        (async () => {
+          try {
+            const requestParams = { ...initialValuesRequestParams };
+
+            const data = await initialValuesRequest(requestParams);
+
+            if (
+              data[responseConfig.code] !== undefined &&
+              data[responseConfig.message] &&
+              data[responseConfig.data]
+            ) {
+              newinitialValues = data.data;
+            } else {
+              newinitialValues = data;
+            }
+            // 如果配置了展示请初始化数据的钩子
+            if (initialValuesBefor) {
+              newinitialValues = initialValuesBefor(newinitialValues);
+            }
+
+            setFormData(newinitialValues);
+          } catch (error) {}
+        })();
       } else {
-        newinitialValues = { ...newFormData };
-      }
+        // 如果有传递初始值默认复制 否者全部设置为null
+        if (initialValues) {
+          newinitialValues = { ...initialValues };
+        } else {
+          newinitialValues = { ...newFormData };
+        }
 
-      // 如果配置了展示请初始化数据的钩子
-      if (initialValuesBefor) {
-        newinitialValues = initialValuesBefor(newinitialValues);
-      }
+        // 如果配置了展示请初始化数据的钩子
+        if (initialValuesBefor) {
+          newinitialValues = initialValuesBefor(newinitialValues);
+        }
 
-      setFormData(newinitialValues);
+        setFormData(newinitialValues);
+      }
     }
     customFormRef.current = customFn;
     if (formRef) {
