@@ -89,7 +89,7 @@ const UploaderCustom = (Props: ComponentsPropsType) => {
         }
       }
 
-      publicUploadFile(file.path, {
+      publicUploadFile(file.path, file.originalFileObj.name, {
         path: prefixPath,
       })
         .then((res: any) => {

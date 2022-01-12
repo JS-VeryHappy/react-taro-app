@@ -180,6 +180,7 @@ const request = (url: string, options?: optionsTypes) => {
 export const uploadFile = (url: string, options?: optionsTypes) => {
   const {
     filePath,
+    fileName,
     data,
     params,
     errorMessageShow = true,
@@ -204,6 +205,7 @@ export const uploadFile = (url: string, options?: optionsTypes) => {
     Taro.uploadFile({
       url: API_URL + uri,
       filePath: filePath,
+      fileName: fileName,
       formData: data,
       name: 'file',
       header: newHeader,

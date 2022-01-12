@@ -119,11 +119,12 @@ export const postDownload = async (url: string, data?: any, options?: any) => {
  * @param data // 表单数据
  * @param options // 额外配置
  */
-export function postUploadFile(url: string, filePath: string, data?: any, options?: any) {
+export function postUploadFile(url: string, filePath: string, fileName, data?: any, options?: any) {
   return uploadFile(url, {
     // method: 'post',
-    data: data,
-    filePath: filePath,
+    data,
+    filePath,
+    fileName,
     ...options,
   });
 }
