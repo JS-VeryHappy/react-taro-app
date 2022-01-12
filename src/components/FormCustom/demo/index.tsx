@@ -125,9 +125,16 @@ const FormCustomDemo1 = () => {
     },
   ];
 
+  //点击提交
   const onSubmit = (value: any) => {
     console.log('====================================');
     console.log(value);
+    console.log('====================================');
+  };
+  // 数据变换
+  const onValueChange = (values: any) => {
+    console.log('====================================');
+    console.log(values);
     console.log('====================================');
   };
 
@@ -138,6 +145,7 @@ const FormCustomDemo1 = () => {
           initialValues={{ select1: 1, select2: [1, 2, 3], phone: '12', password: 'asdasd' }}
           columns={columns}
           formRef={formCustomRef}
+          onValueChange={onValueChange}
           onSubmit={onSubmit}
         />
       </View>

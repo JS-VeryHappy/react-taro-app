@@ -224,6 +224,21 @@ export declare type ColumnsType = {
   cellProps?: CellPropsType;
 };
 
+export declare type SubmitOnDoneType = {
+  /**
+   * 请求完成的回调状态
+   */
+  status?: 'success' | 'error';
+  /**
+   * 请求的请求数据
+   */
+  formData?: Record<any, any>;
+  /**
+   * 请求结果
+   */
+  result?: Record<any, any>;
+  formRef?: FormCustomRefType | any;
+};
 /**
  * 自定义表单type定义
  */
@@ -240,19 +255,67 @@ export declare type FormCustomType = {
    * 表单初始值
    */
   initialValues?: object;
-  /**
-   * 点击完成
-   */
-  onFinish?: (value: any) => Promise<void | any> | void;
 
   /**
    * 表单数据变化时
    */
-  onValueChange?: (value: any) => Promise<void | any> | void;
+  onValueChange?: (
+    /**
+     * 当前改变的对象
+     */
+    values: any,
+    /**
+     * 组件中的动态数据和钩子
+     */
+    config: {
+      /**
+       * 表单数据
+       */
+      formData: any;
+      /**
+       * 传递给组件未动态修改过的字段配置
+       */
+      oldFormColumns: [];
+      /**
+       * 当前组件字段配置
+       */
+      formColumns: [];
+      /**
+       * 修改当前字段配置
+       */
+      setFormColumns: any;
+      /**
+       * 当前组件的red
+       */
+      customFormRef: FormCustomRefType | any;
+    },
+  ) => Promise<void | any> | void;
   /**
    * 点击提交验证通过后返回表单值
    */
   onSubmit?: (value: any) => void;
+  /**
+   * 复制字段配置之前可以动态的修改字段配置
+   * initialValues 表单默认数据
+   */
+  columnBefor?: (column: ColumnsType[], initialValues: any) => ColumnsType[];
+  /**
+   * 初始化数据之前 可以修改数据返回
+   */
+  initialValuesBefor?: (initialValues: any) => any;
+  /**
+   * 提交前的钩子 可以修改表单数据
+   */
+  submitValuesBefor?: (fromData: any) => any;
+  /**
+   * 提交的请求 如果配置则直接请求
+   * 如果不配置则 触发onSubmit
+   */
+  submitRequest?: (_: any) => any;
+  /**
+   * 提交的请求 如果配置则直接请求
+   */
+  submitOnDone?: (params: SubmitOnDoneType) => void;
 };
 
 /**

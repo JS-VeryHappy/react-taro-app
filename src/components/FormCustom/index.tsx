@@ -1,5 +1,5 @@
-import React, { useEffect, useState } from 'react';
-import type { FormCustomType, ColumnsType, RulesType } from './types';
+import React, { useEffect, useState, useRef } from 'react';
+import type { FormCustomType, ColumnsType, RulesType, FormCustomRefType } from './types';
 import { Cell, Button } from '@taroify/core';
 import { View } from '@tarojs/components';
 import './index.scss';
@@ -7,6 +7,7 @@ import * as components from './components';
 import { validateRules } from './validation';
 import Taro from '@tarojs/taro';
 import { ArrowRight } from '@taroify/icons';
+import { deepCopy } from '@/utils';
 
 declare type newColumnsType = ColumnsType & {
   componentProps?: any;
@@ -16,7 +17,21 @@ const FormCustom = (Props: FormCustomType) => {
   const [formData, setFormData] = useState<any>(null);
   const [formRules, setFormRules] = useState<Record<string, RulesType[]>>();
   const [formColumns, setFormColumns] = useState<any>();
-  const { columns, initialValues, onValueChange, formRef, onSubmit } = Props;
+  const [oldFormColumns, setOldFormColumns] = useState<any>();
+  const customFormRef = useRef<FormCustomRefType>();
+
+  const {
+    initialValuesBefor,
+    submitValuesBefor,
+    submitRequest,
+    submitOnDone,
+    columnBefor,
+    columns,
+    initialValues,
+    onValueChange,
+    formRef,
+    onSubmit,
+  } = Props;
 
   const validateValues = async (values: any) => {
     const promises: any = [];
@@ -57,19 +72,98 @@ const FormCustom = (Props: FormCustomType) => {
 
   const onFormSubmit = async () => {
     try {
-      await validateValues(formData);
+      let submitFormData = { ...formData };
+
+      await validateValues(submitFormData);
+
+      if (typeof submitValuesBefor === 'function') {
+        submitFormData = submitValuesBefor(submitFormData);
+      }
+
+      // 如果配置了自动请求
+      if (submitRequest) {
+        try {
+          const result = await submitRequest(submitFormData);
+          // 如果设置请求回调
+          if (submitOnDone) {
+            submitOnDone({
+              status: 'success',
+              result,
+              formData: submitFormData,
+              formRef: customFormRef,
+            });
+          }
+          return true;
+        } catch (error) {
+          if (submitOnDone) {
+            submitOnDone({
+              status: 'error',
+              result: error,
+              formData: submitFormData,
+              formRef: customFormRef,
+            });
+          }
+          return false;
+        }
+      }
+
       if (typeof onSubmit === 'function') {
-        onSubmit(formData);
+        onSubmit(submitFormData);
       }
     } catch (error: any) {
       Taro.showToast({ title: error[0], icon: 'none', duration: 2000 });
     }
   };
 
+  const customFn = {
+    getFieldsValue: (name: string | string[]) => {
+      if (typeof name === 'string') {
+        return {
+          [`${name}`]: formData[name],
+        };
+      }
+
+      const fieldsValue = {};
+      name.forEach((item: any) => {
+        fieldsValue[item] = formData[item];
+      });
+
+      return fieldsValue;
+    },
+    setFieldsValue: (params: any) => {
+      const nowFormData = { ...formData };
+      setFormData({
+        ...nowFormData,
+        ...params,
+      });
+    },
+    validateFields: async (name: string | string[]) => {
+      const fieldsValue = {};
+      if (typeof name === 'string') {
+        fieldsValue[name] = formData[name];
+      } else {
+        name.forEach((item: any) => {
+          fieldsValue[item] = formData[item];
+        });
+      }
+      try {
+        await validateValues(fieldsValue);
+        return true;
+      } catch (error: any) {
+        return error;
+      }
+    },
+    resetFieldsValue: () => {
+      setFormData(initialValues);
+    },
+  };
+
   useEffect(() => {
+    let newinitialValues: any = {};
+
     if (columns && columns.length > 0) {
       let newFormRules: any = {};
-      const newColumns: any = [];
+      let newColumns: any = [];
       let newFormData: any = {};
 
       columns.map((item: ColumnsType) => {
@@ -124,59 +218,34 @@ const FormCustom = (Props: FormCustomType) => {
         newColumns.push(newColumn);
       });
 
+      setOldFormColumns(newColumns);
+
+      // 渲染之前可以动态的修改配置
+      if (typeof columnBefor === 'function') {
+        const deepColumn = deepCopy(newColumns);
+        newColumns = columnBefor(deepColumn, initialValues);
+      }
+
       setFormColumns(newColumns);
       setFormRules(newFormRules);
+
       // 如果有传递初始值默认复制 否者全部设置为null
       if (initialValues) {
-        setFormData(initialValues);
+        newinitialValues = { ...initialValues };
       } else {
-        setFormData(newFormData);
+        newinitialValues = { ...newFormData };
       }
+
+      // 如果配置了展示请初始化数据的钩子
+      if (initialValuesBefor) {
+        newinitialValues = initialValuesBefor(newinitialValues);
+      }
+
+      setFormData(newinitialValues);
     }
-
+    customFormRef.current = customFn;
     if (formRef) {
-      formRef.current = {
-        getFieldsValue: (name: string | string[]) => {
-          if (typeof name === 'string') {
-            return {
-              [`${name}`]: formData[name],
-            };
-          }
-
-          const fieldsValue = {};
-          name.forEach((item: any) => {
-            fieldsValue[item] = formData[item];
-          });
-
-          return fieldsValue;
-        },
-        setFieldsValue: (params: any) => {
-          const nowFormData = { ...formData };
-          setFormData({
-            ...nowFormData,
-            ...params,
-          });
-        },
-        validateFields: async (name: string | string[]) => {
-          const fieldsValue = {};
-          if (typeof name === 'string') {
-            fieldsValue[name] = formData[name];
-          } else {
-            name.forEach((item: any) => {
-              fieldsValue[item] = formData[item];
-            });
-          }
-          try {
-            await validateValues(fieldsValue);
-            return true;
-          } catch (error: any) {
-            return error;
-          }
-        },
-        resetFieldsValue: () => {
-          setFormData(initialValues);
-        },
-      };
+      formRef.current = customFn;
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [columns]);
@@ -206,9 +275,18 @@ const FormCustom = (Props: FormCustomType) => {
           });
           // 如果有监听值变黄
           if (typeof onValueChange === 'function') {
-            onValueChange({
-              [`${dataIndex}`]: changeValue,
-            });
+            onValueChange(
+              {
+                [`${dataIndex}`]: changeValue,
+              },
+              {
+                oldFormColumns,
+                formColumns,
+                setFormColumns,
+                customFormRef,
+                formData,
+              },
+            );
           }
         };
 

@@ -132,7 +132,12 @@ const Index = () => {
     console.log(value);
     console.log('====================================');
   };
-
+  // 数据变换
+  const onValueChange = (values: any, config: any) => {
+    console.log('====================================');
+    console.log(values, config, formCustomRef);
+    console.log('====================================');
+  };
   return (
     <>
       <NavBarCustom title="首页" />
@@ -149,6 +154,7 @@ const Index = () => {
           }}
           columns={columns}
           formRef={formCustomRef}
+          onValueChange={onValueChange}
           onSubmit={onSubmit}
         />
       </View>
