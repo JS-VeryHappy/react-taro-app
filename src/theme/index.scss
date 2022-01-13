@@ -1,0 +1,34 @@
+:root {
+  // Color Palette
+  --black: #000;
+  --white: #fff;
+  --gray-1: #f7f8fa;
+  --gray-2: #f2f3f5;
+  --gray-3: #ebedf0;
+  --gray-4: #dcdee0;
+  --gray-5: #c8c9cc;
+  --gray-6: #969799;
+  --gray-7: #646566;
+  --gray-8: #323233;
+  --red: #ee0a24;
+  --blue: #1989fa;
+  --orange: #ff976a;
+  --orange-dark: #ed6a0c;
+  --orange-light: #fffbe8;
+  --green: #07c160;
+
+  // Component Colors
+  --primary-color: var(--blue);
+  --success-color: var(--green);
+  --danger-color: var(--red);
+  --warning-color: var(--orange);
+  --text-color: var(--gray-8);
+  --text-color-2: var(--gray-6);
+  --text-color-3: var(--gray-5);
+  --text-link-color: #576b95;
+  --active-color: var(--gray-2);
+  --active-opacity: 0.6;
+  --disabled-opacity: 0.5;
+  --background-color: var(--gray-1);
+  --background-color-light: var(--white);
+}

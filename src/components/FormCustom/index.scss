@@ -77,11 +77,11 @@
         padding: 0 10px;
 
         &.is-selected {
-          color: #1989fa;
+          color: var(--primary-color);
         }
 
         &.is-disabled {
-          color: #ccc;
+          opacity: 0.3;
         }
 
         .label {
